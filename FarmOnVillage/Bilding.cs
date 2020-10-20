@@ -40,7 +40,23 @@ namespace FarmOnVillage
         {
             Console.WriteLine($"Thesis {NameBilding} square equals {AriaOfBilding} " +
                 $"contains {ContentAnimals} animal {AnimalsOnBild[0].NameAnimal}" +
-                $"percentage of occupancy {AnimalsOnBild.Count * 100 / ContentAnimals}%"); 
+                $"percentage of occupancy {AnimalsOnBild.Count * 100 / ContentAnimals}%");
+        }
+
+        /// <summary>
+        /// This Method add animals to bild.
+        /// </summary>
+        /// <param name="val"></param>
+        public void AddAnimalToBild(Animals val)
+        {
+            if (AnimalsOnBild.Count + 1 < ContentAnimals)
+            {
+                AnimalsOnBild.Add(val);
+            }
+            else
+            {
+                Console.WriteLine("Sorry Square is busy");
+            }
         }
     }
 }

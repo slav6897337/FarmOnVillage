@@ -34,13 +34,38 @@ namespace FarmOnVillage
                 Console.Write($"{item.NamePlant} ");
             }
 
-            int planed = 0;
+            Console.WriteLine($"\npercentage of occupancy {UsedAreaBed() * 100 / Square}%");
+        }
+
+        /// <summary>
+        /// Method calculate used area.
+        /// </summary>
+        /// <returns> Used area.</returns>
+        private int UsedAreaBed()
+        {
+            int usedAreaBed = 0;
             foreach (var item in PlantsBed)
             {
-                planed += item.AriaOfSeat;
+                usedAreaBed += item.AriaOfSeat;
             }
 
-            Console.WriteLine($"\npercentage of occupancy {planed * 100 / Square}%");
+            return usedAreaBed;
+        }
+
+        /// <summary>
+        /// This Method add plants to Garden Bed.
+        /// </summary>
+        /// <param name="val"></param>
+        public void AddPlantToGardenBed(Plants val)
+        {
+            if (UsedAreaBed() + val.AriaOfSeat < Square)
+            {
+                PlantsBed.Add(val);
+            }
+            else
+            {
+                Console.WriteLine("Sorry Square is busy");
+            }
         }
     }
 }

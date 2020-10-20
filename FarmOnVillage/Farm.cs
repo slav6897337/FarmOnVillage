@@ -40,12 +40,6 @@ namespace FarmOnVillage
             Console.WriteLine($"Thesis farm {NameFarm}, area {Area}, {BildingFarm.Count} building and {GardenBedFarm.Count} Garden Beds");
         }
 
-        /// <summary>
-        /// Method add beds to the farm.
-        /// </summary>
-        public void AddGardenInFarm()
-        {
-            GardenBed
-        }
+
     }
 }
