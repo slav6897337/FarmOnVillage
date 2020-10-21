@@ -101,8 +101,7 @@ namespace FarmOnVillage
         /// <summary>
         /// This Method add bad on farm.
         /// </summary>
-        /// <param name="val"></param>
-        public void AddBadOnFarm(GardenBed val)
+        public void AddBadOnFarm()
         {
             if (UsedAreaOnFarm() + val.Square < Area)
             {

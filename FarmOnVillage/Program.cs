@@ -35,121 +35,104 @@ namespace FarmOnVillage
             tomato.AriaOfSeat = 10;
             tomato.SeasonSeat = 6;
             tomato.SeasonGather = 9;
+            var tomato1 = new Plants("tomato", 6, 9, 10);
 
             Plants strawberry = new Plants();
             strawberry.NamePlant = "Strawberry";
             strawberry.AriaOfSeat = 10;
             strawberry.SeasonSeat = 5;
             strawberry.SeasonGather = 7;
+            Plants strawberry1 = new Plants("Strawberry", 5, 7, 10);
 
             Plants potatoes = new Plants();
             potatoes.NamePlant = "Potatoes";
             potatoes.AriaOfSeat = 10;
             potatoes.SeasonSeat = 5;
             potatoes.SeasonGather = 8;
+            Plants potatoes1 = new Plants("Potatoes", 5, 8, 10);
 
             GardenBed gardenBen1 = new GardenBed();
             gardenBen1.Square = 100;
             gardenBen1.PlantsBed = new List<Plants>();
             gardenBen1.PlantsBed.Add(cucumber);
-            gardenBen1.PlantsBed.Add(tomato);
-            gardenBen1.PlantsBed.Add(strawberry);
-            gardenBen1.PlantsBed.Add(potatoes);
+            var cucumber1 = new Plants("cucumber", 6, 9, 10);
+            gardenBen1.PlantsBed.Add(cucumber1);
 
             GardenBed gardenBen2 = new GardenBed();
             gardenBen2.Square = 100;
             gardenBen2.PlantsBed = new List<Plants>();
-            gardenBen2.PlantsBed.Add(cucumber);
-            gardenBen2.PlantsBed.Add(cucumber);
             gardenBen2.PlantsBed.Add(strawberry);
-            gardenBen2.PlantsBed.Add(potatoes);
-            gardenBen2.PlantsBed.Add(tomato);
+            gardenBen2.PlantsBed.Add(strawberry1);
 
             GardenBed gardenBen3 = new GardenBed();
             gardenBen3.Square = 100;
             gardenBen3.PlantsBed = new List<Plants>();
-            gardenBen3.PlantsBed.Add(strawberry);
-            gardenBen3.PlantsBed.Add(strawberry);
-            gardenBen3.PlantsBed.Add(strawberry);
-            gardenBen3.PlantsBed.Add(strawberry);
-            gardenBen3.PlantsBed.Add(strawberry);
+            gardenBen3.PlantsBed.Add(potatoes);
+            gardenBen3.PlantsBed.Add(potatoes1);
+            gardenBen3.PlantsBed.Add(tomato);
+            gardenBen3.PlantsBed.Add(tomato1);
 
             farmGrodno.GardenBedFarm = new List<GardenBed>();
             farmGrodno.GardenBedFarm.Add(gardenBen1);
             farmGrodno.GardenBedFarm.Add(gardenBen2);
             farmGrodno.GardenBedFarm.Add(gardenBen3);
 
-            ProduktOfAnimal milk = new ProduktOfAnimal();
-            milk.NameProduktOfAnimal = "Milk";
-            milk.Mass = 10;
+            ProduktOfAnimal milk = new ProduktOfAnimal("Milk", 10);
 
-            ProduktOfAnimal meat = new ProduktOfAnimal();
-            meat.NameProduktOfAnimal = "Meat";
-            meat.Mass = 100;
+            ProduktOfAnimal meat = new ProduktOfAnimal("Meat", 100);
 
-            ProduktOfAnimal wool = new ProduktOfAnimal();
-            wool.NameProduktOfAnimal = "Wool";
-            wool.Mass = 10;
+            ProduktOfAnimal wool = new ProduktOfAnimal("Wool", 10);
 
-            ProduktOfAnimal egg = new ProduktOfAnimal();
-            egg.NameProduktOfAnimal = "Egg";
-            egg.Mass = 30;
+            ProduktOfAnimal egg = new ProduktOfAnimal("Egg", 30);
 
-            Animals kow = new Animals();
-            kow.NameAnimal = "Kow";
-            kow.ProduktAnimal = milk;
+            Animals kow = new Animals("Kow", milk);
 
-            Animals pig = new Animals();
-            pig.NameAnimal = "Pig";
-            pig.ProduktAnimal = meat;
+            Animals pig = new Animals("Pig", meat);
 
-            Animals sheep = new Animals();
-            sheep.NameAnimal = "Sheep";
-            sheep.ProduktAnimal = wool;
+            Animals sheep = new Animals("Sheep", wool);
 
-            Animals hen = new Animals();
-            hen.NameAnimal = "Hen";
-            hen.ProduktAnimal = egg;
+            Animals hen = new Animals("Hen", egg);
 
             Bilding pigsty = new Bilding();
             pigsty.NameBilding = "Pigsty";
             pigsty.AriaOfBilding = 1000;
             pigsty.ContentAnimals = 100;
             pigsty.AnimalsOnBild = new List<Animals>();
-            for (int i = 0; i < 100; i++)
-            {
-                pigsty.AnimalsOnBild.Add(pig);
-            }
+            pigsty.AnimalsOnBild.Add(pig);
+            Animals pig1 = new Animals("Pig", meat);
+            pigsty.AnimalsOnBild.Add(pig1);
+            Animals pig2 = new Animals("Pig", meat);
+            Animals pig3 = new Animals("Pig", meat);
+            Animals pig4 = new Animals("Pig", meat);
+            Animals pig5 = new Animals("Pig", meat);
+            Animals pig6 = new Animals("Pig", meat);
+            pigsty.AnimalsOnBild.Add(pig2);
+            pigsty.AnimalsOnBild.Add(pig3);
+            pigsty.AnimalsOnBild.Add(pig4);
+            pigsty.AnimalsOnBild.Add(pig5);
+            pigsty.AnimalsOnBild.Add(pig6);
 
             Bilding barn = new Bilding();
             barn.NameBilding = "Barn";
             barn.AriaOfBilding = 1000;
             barn.ContentAnimals = 80;
             barn.AnimalsOnBild = new List<Animals>();
-            for (int i = 0; i < 80; i++)
-            {
-                barn.AnimalsOnBild.Add(kow);
-            }
+            barn.AnimalsOnBild.Add(kow);
 
             Bilding cote = new Bilding();
             cote.NameBilding = "Cote";
             cote.AriaOfBilding = 1000;
             cote.ContentAnimals = 100;
             cote.AnimalsOnBild = new List<Animals>();
-            for (int i = 0; i < 100; i++)
-            {
-                cote.AnimalsOnBild.Add(sheep);
-            }
+            cote.AnimalsOnBild.Add(sheep);
+
 
             Bilding hennery = new Bilding();
             hennery.NameBilding = "Hennery";
             hennery.AriaOfBilding = 200;
             hennery.ContentAnimals = 100;
             hennery.AnimalsOnBild = new List<Animals>();
-            for (int i = 0; i < 100; i++)
-            {
-                hennery.AnimalsOnBild.Add(hen);
-            }
+            hennery.AnimalsOnBild.Add(hen);
 
             farmGrodno.BildingFarm = new List<Bilding>();
             farmGrodno.BildingFarm.Add(pigsty);
@@ -209,6 +192,16 @@ namespace FarmOnVillage
                         stok1.ReporStock();
                         break;
                     case "5":
+                        Console.WriteLine(" 1 - Add new garden bed\n 2 - Add new plants on Garden Bed\n 3 - Add new Building\n 4 - Add Animal");
+
+                        switch (Console.ReadLine())
+                        {
+                            case "1":
+                                
+                                break;
+                            default:
+                                break;
+                        }
 
                         break;
                     case "q":

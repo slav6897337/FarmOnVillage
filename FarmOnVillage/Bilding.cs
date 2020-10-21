@@ -9,7 +9,7 @@ namespace FarmOnVillage
     using System.Text;
 
     /// <summary>
-    /// class Bilding.
+    /// class Building.
     /// </summary>
     public class Bilding
     {
@@ -44,7 +44,7 @@ namespace FarmOnVillage
         }
 
         /// <summary>
-        /// This Method add animals to bild.
+        /// This Method add animals to build.
         /// </summary>
         /// <param name="val"></param>
         public void AddAnimalToBild(Animals val)

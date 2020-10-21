@@ -22,5 +22,23 @@ namespace FarmOnVillage
         /// Gets or Sets Mass of product.
         /// </summary>
         public int Mass { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProduktOfAnimal"/> class.
+        /// </summary>
+        public ProduktOfAnimal()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProduktOfAnimal"/> class.
+        /// </summary>
+        /// <param name="nameProduct"></param>
+        /// <param name="mass"></param>
+        public ProduktOfAnimal(string nameProduct, int mass)
+        {
+            NameProduktOfAnimal = nameProduct;
+            Mass = mass;
+        }
     }
 }

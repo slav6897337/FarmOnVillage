@@ -20,3 +20,6 @@ dotnet_diagnostic.CA1062.severity = none
 
 # SA1202: Elements should be ordered by access
 dotnet_diagnostic.SA1202.severity = none
+
+# SA1201: Elements should appear in the correct order
+dotnet_diagnostic.SA1201.severity = none

@@ -30,5 +30,27 @@ namespace FarmOnVillage
         /// Gets or sets AriaOfSeat.
         /// </summary>
         public int AriaOfSeat { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Plants"/> class.
+        /// </summary>
+        public Plants()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Plants"/> class.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="seasonSeat"></param>
+        /// <param name="seasonGathew"></param>
+        /// <param name="areaOfSeat"></param>
+        public Plants(string name, int seasonSeat, int seasonGathew, int areaOfSeat)
+        {
+            NamePlant = name;
+            SeasonSeat = seasonSeat;
+            SeasonGather = seasonGathew;
+            AriaOfSeat = areaOfSeat;
+        }
     }
 }
