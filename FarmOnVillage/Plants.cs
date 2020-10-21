@@ -19,12 +19,12 @@ namespace FarmOnVillage
         /// <summary>
         /// Gets or sets SeasonSeat.
         /// </summary>
-        public DateTime SeasonSeat { get; set; }
+        public int SeasonSeat { get; set; }
 
         /// <summary>
         /// Gets or sets SeasonGather.
         /// </summary>
-        public DateTime SeasonGather { get; set; }
+        public int SeasonGather { get; set; }
 
         /// <summary>
         /// Gets or sets AriaOfSeat.

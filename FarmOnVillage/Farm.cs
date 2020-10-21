@@ -33,11 +33,33 @@ namespace FarmOnVillage
         public List<Bilding> BildingFarm { get; set; }
 
         /// <summary>
+        /// Method calculate used area on Farm.
+        /// </summary>
+        /// <returns> Used area.</returns>
+        private int UsedAreaFarm()
+        {
+            int usedAreaFarm = 0;
+            foreach (var item in GardenBedFarm)
+            {
+                usedAreaFarm += item.Square;
+            }
+
+            foreach (var item in BildingFarm)
+            {
+                usedAreaFarm += item.AriaOfBilding;
+            }
+
+            return usedAreaFarm;
+        }
+
+        /// <summary>
         /// Console write report of Farm.
         /// </summary>
         public void ReportFarm()
         {
-            Console.WriteLine($"Thesis farm {NameFarm}, area {Area}, {BildingFarm.Count} building and {GardenBedFarm.Count} Garden Beds");
+            Console.WriteLine($"Thesis farm {NameFarm}, area {Area}, " +
+                $"{BildingFarm.Count} building and {GardenBedFarm.Count} Garden Beds, " +
+                $"Percent used area: {UsedAreaFarm() * 100 / Area}%");
         }
 
         /// <summary>
@@ -61,7 +83,7 @@ namespace FarmOnVillage
         }
 
         /// <summary>
-        /// This Method add bild on farm.
+        /// This Method add build on farm.
         /// </summary>
         /// <param name="val"></param>
         public void AddBildOnFarm(Bilding val)

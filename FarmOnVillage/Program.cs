@@ -19,35 +19,34 @@ namespace FarmOnVillage
         private static void Main(string[] args)
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;
+            byte manth = 0;
             Farm farmGrodno = new Farm();
             farmGrodno.NameFarm = "Grodno Farm";
             farmGrodno.Area = 10000;
 
-            DateTime season = default(DateTime);
-
             Plants cucumber = new Plants();
             cucumber.NamePlant = "Cucumber";
             cucumber.AriaOfSeat = 10;
-            cucumber.SeasonSeat = season.AddMonths(6);
-            cucumber.SeasonGather = season.AddMonths(9);
+            cucumber.SeasonSeat = 6;
+            cucumber.SeasonGather = 9;
 
             Plants tomato = new Plants();
             tomato.NamePlant = "Tomato";
             tomato.AriaOfSeat = 10;
-            tomato.SeasonSeat = season.AddMonths(6);
-            tomato.SeasonGather = season.AddMonths(9);
+            tomato.SeasonSeat = 6;
+            tomato.SeasonGather = 9;
 
             Plants strawberry = new Plants();
             strawberry.NamePlant = "Strawberry";
             strawberry.AriaOfSeat = 10;
-            strawberry.SeasonSeat = season.AddMonths(5);
-            strawberry.SeasonGather = season.AddMonths(7);
+            strawberry.SeasonSeat = 5;
+            strawberry.SeasonGather = 7;
 
             Plants potatoes = new Plants();
             potatoes.NamePlant = "Potatoes";
             potatoes.AriaOfSeat = 10;
-            potatoes.SeasonSeat = season.AddMonths(5);
-            potatoes.SeasonGather = season.AddMonths(8);
+            potatoes.SeasonSeat = 5;
+            potatoes.SeasonGather = 8;
 
             GardenBed gardenBen1 = new GardenBed();
             gardenBen1.Square = 100;
@@ -166,6 +165,60 @@ namespace FarmOnVillage
             barn.ReportBildings();
             cote.ReportBildings();
             hennery.ReportBildings();
+
+            Stock stok1 = new Stock();
+            stok1.VolumeStock = 500;
+            stok1.Fruit = new Dictionary<string, int>();
+            stok1.Product = new Dictionary<string, int>();
+            stok1.Product.Add(milk.NameProduktOfAnimal, 10);
+            stok1.Product.Add(meat.NameProduktOfAnimal, 50);
+            stok1.Product.Add(wool.NameProduktOfAnimal, 5);
+            stok1.Product.Add(egg.NameProduktOfAnimal, 30);
+
+            stok1.Fruit.Add(cucumber.NamePlant, 30);
+            stok1.Fruit.Add(tomato.NamePlant, 30);
+            stok1.Fruit.Add(strawberry.NamePlant, 20);
+            stok1.Fruit.Add(potatoes.NamePlant, 50);
+
+            bool game = true;
+
+            while (game)
+            {
+                Console.WriteLine(" 1 - Report of Farm\n 2 - Report of Garden Bed\n 3 - Report of Buildings\n 4 - Report of Stock\n 5 - Farm management\n Q - quit.");
+
+                switch (Console.ReadLine())
+                {
+                    case "1":
+                        farmGrodno.ReportFarm();
+                        break;
+                    case "2":
+                        foreach (var item in farmGrodno.GardenBedFarm)
+                        {
+                            item.ReportGardenBed();
+                        }
+
+                        break;
+                    case "3":
+                        foreach (var item in farmGrodno.BildingFarm)
+                        {
+                            item.ReportBildings();
+                        }
+
+                        break;
+                    case "4":
+                        stok1.ReporStock();
+                        break;
+                    case "5":
+
+                        break;
+                    case "q":
+                        game = false;
+                        break;
+                    default:
+                        manth++;
+                        break;
+                }
+            }
         }
     }
 }
