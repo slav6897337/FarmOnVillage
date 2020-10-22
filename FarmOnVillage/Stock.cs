@@ -53,8 +53,27 @@ namespace FarmOnVillage
         /// </summary>
         public void ReporStock()
         {
-            Console.WriteLine($"Report of Stock Volume Stock {VolumeStock}Kg," +
-                $" percentage of warehouse Stock: {UsedVolumeInStock() * 100 / VolumeStock}%");
+            Console.WriteLine($"Report of Stock Volume Stock {VolumeStock}Kg, percentage of warehouse Stock: {UsedVolumeInStock() * 100 / VolumeStock}%\n");
+        }
+
+        /// <summary>
+        /// Method Add product.
+        /// </summary>
+        /// <param name="key1"></param>
+        public void AddProduct(string key1)
+        {
+            foreach (var prod in Product)
+            {
+                if (prod.Key == key1)
+                {
+                    int temp = prod.Value + 1;
+                    Product.Remove(prod.Key);
+                    Product.Add(key1, temp);
+                    return;
+                }
+            }
+
+            Product.Add(key1, 1);
         }
     }
 }

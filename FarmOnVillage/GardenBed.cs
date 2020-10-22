@@ -23,18 +23,49 @@ namespace FarmOnVillage
         public List<Plants> PlantsBed { get; set; }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="GardenBed"/> class.
+        /// </summary>
+        public GardenBed()
+        {
+            Square = 10;
+            PlantsBed = new List<Plants>();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GardenBed"/> class.
+        /// </summary>
+        /// <param name="square"></param>
+        public GardenBed(int square)
+        {
+            Square = square;
+            PlantsBed = new List<Plants>();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GardenBed"/> class.
+        /// </summary>
+        /// <param name="square"></param>
+        /// <param name="plant"></param>
+        public GardenBed(int square, Plants plant)
+        {
+            Square = square;
+            PlantsBed = new List<Plants>();
+            PlantsBed.Add(plant);
+        }
+
+        /// <summary>
         /// Console write report of garden Bed.
         /// </summary>
         public void ReportGardenBed()
         {
-            Console.WriteLine($"Thesis Garden Bed square equals {Square}");
+            Console.WriteLine($"This is the Garden Bed square equals {Square}");
             Console.Write($"Plants grow in the garden Bed: ");
             foreach (var item in PlantsBed)
             {
                 Console.Write($"{item.NamePlant} ");
             }
 
-            Console.WriteLine($"\npercentage of occupancy {UsedAreaBed() * 100 / Square}%");
+            Console.WriteLine($"percentage of occupancy {UsedAreaBed() * 100 / Square}%\n");
         }
 
         /// <summary>
@@ -53,14 +84,28 @@ namespace FarmOnVillage
         }
 
         /// <summary>
-        /// This Method add plants to Garden Bed.
+        /// Method add Plants to the bed.
         /// </summary>
-        /// <param name="val"></param>
-        public void AddPlantToGardenBed(Plants val)
+        public void AddPlantsToThebed()
         {
-            if (UsedAreaBed() + val.AriaOfSeat < Square)
+            Plants plantToAdd = new Plants();
+            Console.WriteLine("Enter name product");
+            string namePlant = Console.ReadLine();
+            plantToAdd.NamePlant = "Cucumber";
+            Console.WriteLine("Enter area of seat");
+            int ariaOfSeat = int.Parse(Console.ReadLine());
+            plantToAdd.AriaOfSeat = ariaOfSeat;
+            Console.WriteLine("Enter name season seat");
+            int seasonSeat = int.Parse(Console.ReadLine());
+            plantToAdd.SeasonSeat = seasonSeat;
+            Console.WriteLine("Enter season gather");
+            int seasonGather = int.Parse(Console.ReadLine());
+            plantToAdd.SeasonGather = seasonGather;
+
+            if (UsedAreaBed() + ariaOfSeat < Square)
             {
-                PlantsBed.Add(val);
+                PlantsBed.Add(plantToAdd);
+                Console.WriteLine("Mew Plant add");
             }
             else
             {
