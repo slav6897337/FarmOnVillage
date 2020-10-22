@@ -24,10 +24,16 @@ namespace FarmOnVillage
         public ProduktOfAnimal ProduktAnimal { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether IsMultyHarvest.
+        /// </summary>
+        public bool IsMultyHarvest { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Animals"/> class.
         /// </summary>
         public Animals()
         {
+            IsMultyHarvest = true;
         }
 
         /// <summary>
@@ -39,6 +45,7 @@ namespace FarmOnVillage
         {
             NameAnimal = nameAnimal;
             ProduktAnimal = produktAnimal;
+            IsMultyHarvest = true;
         }
     }
 }

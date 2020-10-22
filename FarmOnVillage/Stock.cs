@@ -75,5 +75,25 @@ namespace FarmOnVillage
 
             Product.Add(key1, 1);
         }
+
+        /// <summary>
+        /// Method add product on stock.
+        /// </summary>
+        /// <param name="key1"></param>
+        public void AddFruit(string key1)
+        {
+            foreach (var fruit in Fruit)
+            {
+                if (fruit.Key == key1)
+                {
+                    int temp = fruit.Value + 1;
+                    Product.Remove(fruit.Key);
+                    Product.Add(key1, temp);
+                    return;
+                }
+            }
+
+            Fruit.Add(key1, 1);
+        }
     }
 }

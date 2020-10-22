@@ -138,18 +138,19 @@ namespace FarmOnVillage
 
             farmGrodno.ReportFarm();
 
-            Stock stok1 = new Stock();
-            stok1.VolumeStock = 500;
-            stok1.Fruit = new Dictionary<string, int>();
-            stok1.Product = new Dictionary<string, int>();
-            stok1.Product.Add(milk.NameProduktOfAnimal, 10);
-            stok1.Product.Add(meat.NameProduktOfAnimal, 50);
-            stok1.Product.Add(wool.NameProduktOfAnimal, 5);
-            stok1.Product.Add(egg.NameProduktOfAnimal, 30);
-            stok1.Fruit.Add(cucumber.NamePlant, 30);
-            stok1.Fruit.Add(tomato.NamePlant, 30);
-            stok1.Fruit.Add(strawberry.NamePlant, 20);
-            stok1.Fruit.Add(potatoes.NamePlant, 50);
+            Stock stock = new Stock();
+            stock.VolumeStock = 5000;
+            stock.Fruit = new Dictionary<string, int>();
+            stock.Product = new Dictionary<string, int>();
+            stock.Product.Add(milk.NameProduktOfAnimal, 10);
+            stock.Product.Add(meat.NameProduktOfAnimal, 50);
+            stock.Product.Add(wool.NameProduktOfAnimal, 5);
+            stock.Product.Add(egg.NameProduktOfAnimal, 30);
+            stock.Fruit.Add(cucumber.NamePlant, 30);
+            stock.Fruit.Add(tomato.NamePlant, 30);
+            stock.Fruit.Add(strawberry.NamePlant, 20);
+            stock.Fruit.Add(potatoes.NamePlant, 50);
+            farmGrodno.StockInCountry = stock;
 
             bool game = true;
 
@@ -177,7 +178,7 @@ namespace FarmOnVillage
 
                         break;
                     case "4":
-                        stok1.ReporStock();
+                        stock.ReporStock();
                         break;
                     case "5":
                         Console.WriteLine(" 1 - Add new garden bed\n 2 - Add new plants on Garden Bed\n 3 - Add new Building\n 4 - Add Animal");
@@ -211,8 +212,8 @@ namespace FarmOnVillage
                             manth = 1;
                         }
 
-                        farmGrodno.SmenaSezona(stok1);
-
+                        farmGrodno.SmenaSezona(stock);
+                        farmGrodno.ChekSeason(manth);
                         break;
                 }
             }

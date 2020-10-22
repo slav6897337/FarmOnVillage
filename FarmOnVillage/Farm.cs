@@ -33,6 +33,11 @@ namespace FarmOnVillage
         public List<Bilding> BildingFarm { get; set; }
 
         /// <summary>
+        /// Gets or sets property Stock.
+        /// </summary>
+        public Stock StockInCountry { get; set; }
+
+        /// <summary>
         /// Method calculate used area on Farm.
         /// </summary>
         /// <returns> Used area.</returns>
@@ -192,6 +197,24 @@ namespace FarmOnVillage
             foreach (var item in BildingFarm)
             {
                 item.ProductonStock(stock);
+            }
+        }
+
+        /// <summary>
+        /// Method check season and add plants.
+        /// </summary>
+        /// <param name="month"></param>
+        public void ChekSeason(int month)
+        {
+            foreach (var bed in GardenBedFarm)
+            {
+                foreach (var plant in bed.PlantsBed)
+                {
+                    if (plant.SeasonGather == month)
+                    {
+                        StockInCountry.AddFruit(plant.NamePlant);
+                    }
+                }
             }
         }
     }

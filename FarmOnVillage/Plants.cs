@@ -32,10 +32,16 @@ namespace FarmOnVillage
         public int AriaOfSeat { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether IsMultyHarvest.
+        /// </summary>
+        public bool IsMultyHarvest { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Plants"/> class.
         /// </summary>
         public Plants()
         {
+            IsMultyHarvest = true;
         }
 
         /// <summary>
@@ -51,6 +57,7 @@ namespace FarmOnVillage
             SeasonSeat = seasonSeat;
             SeasonGather = seasonGathew;
             AriaOfSeat = areaOfSeat;
+            IsMultyHarvest = true;
         }
     }
 }
