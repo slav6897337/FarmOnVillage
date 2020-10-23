@@ -29,6 +29,16 @@ namespace FarmOnVillage
         public bool IsMultyHarvest { get; set; }
 
         /// <summary>
+        /// Gets or sets TimeBetweenHarvests.
+        /// </summary>
+        public int TimeBetweenHarvests { get; set; }
+
+        /// <summary>
+        /// Gets or sets Price.
+        /// </summary>
+        public int Price { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Animals"/> class.
         /// </summary>
         public Animals()
@@ -46,6 +56,20 @@ namespace FarmOnVillage
             NameAnimal = nameAnimal;
             ProduktAnimal = produktAnimal;
             IsMultyHarvest = true;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Animals"/> class.
+        /// </summary>
+        /// <param name="nameAnimal"></param>
+        /// <param name="produktAnimal"></param>
+        /// <param name="praice"></param>
+        public Animals(string nameAnimal, ProduktOfAnimal produktAnimal, int praice)
+        {
+            NameAnimal = nameAnimal;
+            ProduktAnimal = produktAnimal;
+            IsMultyHarvest = true;
+            Price = praice;
         }
     }
 }

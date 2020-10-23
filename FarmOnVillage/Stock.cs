@@ -29,6 +29,16 @@ namespace FarmOnVillage
         public Dictionary<string, int> Fruit { get; set; }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Stock"/> class.
+        /// </summary>
+        public Stock()
+        {
+            Product = new Dictionary<string, int>();
+            Fruit = new Dictionary<string, int>();
+            VolumeStock = 1000;
+        }
+
+        /// <summary>
         /// Method calculate used Volume in stock.
         /// </summary>
         /// <returns> Used area.</returns>

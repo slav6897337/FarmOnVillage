@@ -38,6 +38,33 @@ namespace FarmOnVillage
         public Stock StockInCountry { get; set; }
 
         /// <summary>
+        /// Gets or sets property your money.
+        /// </summary>
+        public int Money { get; set; }
+
+        /// <summary>
+        /// Gets or sets property your MarketForFarm.
+        /// </summary>
+        public Market MarketForFarm { get; set; }
+
+        /// <summary>
+        /// Gets or sets RawMaterialOnFarm.
+        /// </summary>
+        public RawMaterial RawMaterialOnFarm { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Farm"/> class.
+        /// </summary>
+        public Farm()
+        {
+            NameFarm = "Igogo";
+            Area = 100;
+            GardenBedFarm = new List<GardenBed>();
+            BildingFarm = new List<Bilding>();
+            Money = 1000;
+        }
+
+        /// <summary>
         /// Method calculate used area on Farm.
         /// </summary>
         /// <returns> Used area.</returns>
@@ -101,6 +128,12 @@ namespace FarmOnVillage
         /// </summary>
         public void AddBildOnFarm()
         {
+            if (Money < 500)
+            {
+                Console.WriteLine("Sorry you mast have 500$");
+                return;
+            }
+
             Console.WriteLine("Enter name building");
             string nameBuilding = Console.ReadLine();
             Console.WriteLine("Enter area of seat");
@@ -108,23 +141,16 @@ namespace FarmOnVillage
             Console.WriteLine("Enter capacity");
             int conteints = int.Parse(Console.ReadLine());
 
-            Console.WriteLine("Enter name animal");
-            string nameAnimal = Console.ReadLine();
-            Console.WriteLine("Enter name product of animal");
-            string nameProdukt = Console.ReadLine();
-            Console.WriteLine("Enter mass of product");
-            int massProduct = int.Parse(Console.ReadLine());
-            ProduktOfAnimal produkt = new ProduktOfAnimal(nameProdukt, massProduct);
-            Animals animal = new Animals(nameAnimal, produkt);
             if (UsedAreaOnFarm() + ariaOfBuilding < Area)
             {
-                Bilding build = new Bilding(nameBuilding, ariaOfBuilding, conteints, animal);
+                Bilding build = new Bilding(nameBuilding, ariaOfBuilding, conteints);
                 BildingFarm.Add(build);
+                Money -= 500;
                 Console.WriteLine("Mew Building add");
             }
             else
             {
-                Console.WriteLine("Sorry Area busy.");
+                Console.WriteLine("Sorry Area busy. You must buy more land.");
             }
         }
 
@@ -133,6 +159,12 @@ namespace FarmOnVillage
         /// </summary>
         public void AddAnimalToBild()
         {
+            if (BildingFarm.Count == 0)
+            {
+                Console.WriteLine("There are no buildings on the farm");
+                return;
+            }
+
             Console.WriteLine("Please choose in what build do you wont add animal");
             for (int i = 0; i < BildingFarm.Count; i++)
             {
@@ -145,7 +177,7 @@ namespace FarmOnVillage
                 Console.WriteLine("Please enter correctly data");
             }
 
-            BildingFarm[building].AddAnimalToTheBild();
+            ChecfreeAnimal(BildingFarm[building]);
         }
 
         /// <summary>
@@ -153,6 +185,12 @@ namespace FarmOnVillage
         /// </summary>
         public void AddPlantsToBed()
         {
+            if (GardenBedFarm.Count == 0)
+            {
+                Console.WriteLine("There are no Garden bed on the farm");
+                return;
+            }
+
             Console.WriteLine("Please choose in what Garden bed do you wont add plants");
             for (int i = 0; i < GardenBedFarm.Count; i++)
             {
@@ -165,7 +203,7 @@ namespace FarmOnVillage
                 Console.WriteLine("Please enter correctly data");
             }
 
-            GardenBedFarm[bed].AddPlantsToThebed();
+            ChecfreeGardenBed(GardenBedFarm[bed]);
         }
 
         /// <summary>
@@ -208,14 +246,195 @@ namespace FarmOnVillage
         {
             foreach (var bed in GardenBedFarm)
             {
-                foreach (var plant in bed.PlantsBed)
+                for (int i = 0; i < bed.PlantsBed.Count; i++)
                 {
-                    if (plant.SeasonGather == month)
+                    if (bed.PlantsBed[i].SeasonGather == month)
                     {
-                        StockInCountry.AddFruit(plant.NamePlant);
+                        StockInCountry.AddFruit(bed.PlantsBed[i].NamePlant);
+                        bed.PlantsBed[i].IsMultyHarvest = false;
+                        bed.PlantsBed.Remove(bed.PlantsBed[i]);
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Method buy land.
+        /// </summary>
+        public void BuyLand()
+        {
+            Console.WriteLine("Haw many land you want to buy?");
+
+            int temp = int.Parse(Console.ReadLine());
+            Area += temp;
+            Money -= temp * 10;
+        }
+
+        /// <summary>
+        /// Method Purchases.
+        /// </summary>
+        public void Purchases()
+        {
+            Console.WriteLine("What will you want buy? 1 - Animals, 2 - Seeds");
+
+            string choose = Console.ReadLine();
+
+            if (choose == "1")
+            {
+                Console.WriteLine("Please choose animal");
+                for (int i = 0; i < MarketForFarm.AnimalsToBuy.Count; i++)
+                {
+                    Console.WriteLine($"{i} - {MarketForFarm.AnimalsToBuy[i].NameAnimal}");
+                }
+
+                int temp;
+                while (!int.TryParse(Console.ReadLine(), out temp) || temp < 0 || temp >= MarketForFarm.AnimalsToBuy.Count)
+                {
+                    Console.WriteLine("Please enter correctly data");
+                }
+
+                BuySomething(MarketForFarm.AnimalsToBuy[temp]);
+            }
+            else if (choose == "2")
+            {
+                Console.WriteLine("Please choose seeds");
+                for (int i = 0; i < MarketForFarm.SeedsToBuy.Count; i++)
+                {
+                    Console.WriteLine($"{i} - {MarketForFarm.SeedsToBuy[i].PlantsSeed}");
+                }
+
+                int temp;
+                while (!int.TryParse(Console.ReadLine(), out temp) || temp < 0 || temp >= MarketForFarm.SeedsToBuy.Count)
+                {
+                    Console.WriteLine("Please enter correctly data");
+                }
+
+                BuySomething(MarketForFarm.SeedsToBuy[temp]);
+            }
+            else
+            {
+                Console.WriteLine("Sorry we don't have it.");
+            }
+        }
+
+        /// <summary>
+        /// Method BuySomething.
+        /// </summary>
+        /// <param name="anim"></param>
+        public void BuySomething(Animals anim)
+        {
+            if (Money > anim.Price)
+            {
+                Animals newAnim = new Animals(anim.NameAnimal, anim.ProduktAnimal, anim.Price);
+                RawMaterialOnFarm.AnimalsFree.Add(newAnim);
+                Money -= anim.Price;
+            }
+            else
+            {
+                Console.WriteLine("Sorry you don't have money.");
+            }
+        }
+
+        /// <summary>
+        /// Method BuySomething.
+        /// </summary>
+        /// <param name="seed"></param>
+        public void BuySomething(Seed seed)
+        {
+            if (Money > seed.Price)
+            {
+                Plants newPlant = new Plants(seed.PlantsSeed, seed.SeasonSeat, seed.SeasonSeat + 3, 10);
+                RawMaterialOnFarm.PlantsFree.Add(newPlant);
+                Money -= seed.Price;
+            }
+            else
+            {
+                Console.WriteLine("Sorry you don't have money.");
+            }
+        }
+
+        /// <summary>
+        /// This Method add animals to build.
+        /// </summary>
+        /// <param name="bilding"></param>
+        public void ChecfreeAnimal(Bilding bilding)
+        {
+            if (RawMaterialOnFarm.AnimalsFree.Count == 0)
+            {
+                Console.WriteLine("Please buy Animals");
+                return;
+            }
+
+            Console.WriteLine("Choose what Animals do you want to add");
+            for (int i = 0; i < RawMaterialOnFarm.AnimalsFree.Count; i++)
+            {
+                Console.WriteLine($"  {i} - {RawMaterialOnFarm.AnimalsFree[i].NameAnimal}");
+            }
+
+            int temp;
+            while (!int.TryParse(Console.ReadLine(), out temp) || temp < 0 || temp >= RawMaterialOnFarm.AnimalsFree.Count)
+            {
+                Console.WriteLine("Please enter correctly data");
+            }
+
+            if (bilding.AnimalsOnBild.Count + 1 < bilding.ContentAnimals)
+            {
+                bilding.AnimalsOnBild.Add(RawMaterialOnFarm.AnimalsFree[temp]);
+                RawMaterialOnFarm.AnimalsFree.RemoveAt(temp);
+                Console.WriteLine("New animals add");
+            }
+            else
+            {
+                Console.WriteLine("Sorry Square is busy");
+            }
+        }
+
+        /// <summary>
+        /// Method ChecfreeGardenBed.
+        /// </summary>
+        /// <param name="bed"></param>
+        public void ChecfreeGardenBed(GardenBed bed)
+        {
+            if (RawMaterialOnFarm.PlantsFree.Count == 0)
+            {
+                Console.WriteLine("Please buy Plants");
+                return;
+            }
+
+            Console.WriteLine("Choose what Plants do you want to add");
+            for (int i = 0; i < RawMaterialOnFarm.PlantsFree.Count; i++)
+            {
+                Console.WriteLine($"  {i} - {RawMaterialOnFarm.PlantsFree[i].NamePlant}");
+            }
+
+            int temp;
+            while (!int.TryParse(Console.ReadLine(), out temp) || temp < 0 || temp >= RawMaterialOnFarm.PlantsFree.Count)
+            {
+                Console.WriteLine("Please enter correctly data");
+            }
+
+            if (bed.ChekFreeBed(RawMaterialOnFarm.PlantsFree[temp]))
+            {
+                bed.PlantsBed.Add(RawMaterialOnFarm.PlantsFree[temp]);
+                Console.WriteLine("Mew Plant add");
+                RawMaterialOnFarm.PlantsFree.RemoveAt(temp);
+            }
+            else
+            {
+                Console.WriteLine("Sorry Square is busy");
+            }
+        }
+
+        /// <summary>
+        /// Method sales.
+        /// </summary>
+        public void Sales()
+        {
+            int temp = (StockInCountry.Product.Count * 10) + (StockInCountry.Fruit.Count * 5);
+            Money += temp;
+            StockInCountry.Product.Clear();
+            StockInCountry.Fruit.Clear();
+            Console.WriteLine($"You earned {temp}$");
         }
     }
 }

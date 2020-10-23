@@ -50,6 +50,21 @@ namespace FarmOnVillage
         /// <param name="areaOfBuilding"></param>
         /// <param name="conteints"></param>
         /// <param name="animal"></param>
+        public Bilding(string nameBuilding, int areaOfBuilding, int conteints)
+        {
+            AnimalsOnBild = new List<Animals>();
+            NameBilding = nameBuilding;
+            AriaOfBilding = conteints;
+            ContentAnimals = conteints;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Bilding"/> class.
+        /// </summary>
+        /// <param name="nameBuilding"></param>
+        /// <param name="areaOfBuilding"></param>
+        /// <param name="conteints"></param>
+        /// <param name="animal"></param>
         public Bilding(string nameBuilding, int areaOfBuilding, int conteints, Animals animal)
         {
             AnimalsOnBild = new List<Animals>();
@@ -64,39 +79,13 @@ namespace FarmOnVillage
         /// </summary>
         public void ReportBildings()
         {
-            Console.WriteLine($"This is the {NameBilding} square equals {AriaOfBilding} contains {ContentAnimals} animal {AnimalsOnBild[0].NameAnimal} percentage of occupancy {AnimalsOnBild.Count * 100 / ContentAnimals}%\n");
-        }
-
-        /// <summary>
-        /// This Method add animals to build.
-        /// </summary>
-        /// <param name="val"></param>
-        public void AddAnimalToTheBild()
-        {
-            Console.WriteLine("Haw many Animals do you want to add");
-            int count;
-            while (!int.TryParse(Console.ReadLine(), out count))
+            Console.Write($"This is the {NameBilding} square equals {AriaOfBilding} contains {ContentAnimals} animal: ");
+            foreach (var animal in AnimalsOnBild)
             {
-                Console.WriteLine("Please enter correctly data");
+                Console.Write($"{animal.NameAnimal} ");
             }
 
-            if (AnimalsOnBild.Count + count < ContentAnimals)
-            {
-                string name = AnimalsOnBild[0].NameAnimal;
-                ProduktOfAnimal product = AnimalsOnBild[0].ProduktAnimal;
-
-                for (int i = 0; i < count; i++)
-                {
-                    var animal = new Animals(name, product);
-                    AnimalsOnBild.Add(animal);
-                }
-
-                Console.WriteLine("Mew animals add");
-            }
-            else
-            {
-                Console.WriteLine("Sorry Square is busy");
-            }
+            Console.WriteLine($"percentage of occupancy {AnimalsOnBild.Count * 100 / ContentAnimals}%\n");
         }
 
         /// <summary>
@@ -108,7 +97,7 @@ namespace FarmOnVillage
             foreach (var item in AnimalsOnBild)
             {
                 stock.AddProduct(item.NameAnimal);
-                Console.WriteLine($"{item.NameAnimal} gave {item.ProduktAnimal.NameProduktOfAnimal}");
+                Console.WriteLine($"{item.NameAnimal} gave {item.ProduktAnimal.NameProduktOfAnimal} {1}kg");
             }
         }
     }

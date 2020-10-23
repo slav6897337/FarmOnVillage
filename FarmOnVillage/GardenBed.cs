@@ -86,31 +86,11 @@ namespace FarmOnVillage
         /// <summary>
         /// Method add Plants to the bed.
         /// </summary>
-        public void AddPlantsToThebed()
+        /// <returns>free or not area.</returns>
+        /// <param name="plants"></param>
+        public bool ChekFreeBed(Plants plants)
         {
-            Plants plantToAdd = new Plants();
-            Console.WriteLine("Enter name product");
-            string namePlant = Console.ReadLine();
-            plantToAdd.NamePlant = "Cucumber";
-            Console.WriteLine("Enter area of seat");
-            int ariaOfSeat = int.Parse(Console.ReadLine());
-            plantToAdd.AriaOfSeat = ariaOfSeat;
-            Console.WriteLine("Enter name season seat");
-            int seasonSeat = int.Parse(Console.ReadLine());
-            plantToAdd.SeasonSeat = seasonSeat;
-            Console.WriteLine("Enter season gather");
-            int seasonGather = int.Parse(Console.ReadLine());
-            plantToAdd.SeasonGather = seasonGather;
-
-            if (UsedAreaBed() + ariaOfSeat < Square)
-            {
-                PlantsBed.Add(plantToAdd);
-                Console.WriteLine("Mew Plant add");
-            }
-            else
-            {
-                Console.WriteLine("Sorry Square is busy");
-            }
+            return (UsedAreaBed() + plants.AriaOfSeat < Square) ? true : false;
         }
     }
 }

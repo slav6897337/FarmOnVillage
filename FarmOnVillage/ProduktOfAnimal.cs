@@ -24,6 +24,11 @@ namespace FarmOnVillage
         public int Mass { get; set; }
 
         /// <summary>
+        /// Gets or sets Price.
+        /// </summary>
+        public int Price { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ProduktOfAnimal"/> class.
         /// </summary>
         public ProduktOfAnimal()

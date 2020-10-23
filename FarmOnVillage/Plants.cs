@@ -37,6 +37,11 @@ namespace FarmOnVillage
         public bool IsMultyHarvest { get; set; }
 
         /// <summary>
+        /// Gets or sets Price.
+        /// </summary>
+        public int Price { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Plants"/> class.
         /// </summary>
         public Plants()
