@@ -59,17 +59,19 @@ namespace FarmOnVillage
             }
         }
 
-
-
         internal static void ShowTableMarket()
         {
             using (var context = new FarmContext())
             {
-                var tx = 
-
-                foreach (var item in tx)
+                var market = context.Markets.FirstOrDefault();
+                foreach (var item in market.SeedsToBuy)
                 {
-                    Console.WriteLine(item);
+                    Console.WriteLine($"{0} Season seat:{1} price:{2}", item.PlantsSeed, item.SeasonSeat, item.Price);
+                }
+
+                foreach (var item in market.AnimalsToBuy)
+                {
+                    Console.WriteLine($"{0} Product:{1} price:{2}", item.NameAnimal, item.ProduktAnimal, item.Price);
                 }
 
             }
