@@ -13,6 +13,11 @@ namespace FarmOnVillage
     public class GardenBed
     {
         /// <summary>
+        /// Gets or sets PlantId.
+        /// </summary>
+        public int GardenBedId { get; set; }
+
+        /// <summary>
         /// Gets or sets property Square.
         /// </summary>
         public int Square { get; set; }
@@ -20,7 +25,7 @@ namespace FarmOnVillage
         /// <summary>
         /// Gets or sets property Square.
         /// </summary>
-        public List<Plants> PlantsBed { get; set; }
+        public List<Plant> PlantsBed { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GardenBed"/> class.
@@ -28,7 +33,7 @@ namespace FarmOnVillage
         public GardenBed()
         {
             Square = 10;
-            PlantsBed = new List<Plants>();
+            PlantsBed = new List<Plant>();
         }
 
         /// <summary>
@@ -38,7 +43,7 @@ namespace FarmOnVillage
         public GardenBed(int square)
         {
             Square = square;
-            PlantsBed = new List<Plants>();
+            PlantsBed = new List<Plant>();
         }
 
         /// <summary>
@@ -46,10 +51,10 @@ namespace FarmOnVillage
         /// </summary>
         /// <param name="square"></param>
         /// <param name="plant"></param>
-        public GardenBed(int square, Plants plant)
+        public GardenBed(int square, Plant plant)
         {
             Square = square;
-            PlantsBed = new List<Plants>();
+            PlantsBed = new List<Plant>();
             PlantsBed.Add(plant);
         }
 
@@ -88,9 +93,9 @@ namespace FarmOnVillage
         /// </summary>
         /// <returns>free or not area.</returns>
         /// <param name="plants"></param>
-        public bool ChekFreeBed(Plants plants)
+        public bool ChekFreeBed(Plant plants)
         {
-            return (UsedAreaBed() + plants.AriaOfSeat < Square) ? true : false;
+            return UsedAreaBed() + plants.AriaOfSeat < Square;
         }
     }
 }

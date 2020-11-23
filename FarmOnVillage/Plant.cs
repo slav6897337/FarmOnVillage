@@ -1,16 +1,19 @@
-﻿// <copyright file="Plants.cs" company="PlaceholderCompany">
+﻿// <copyright file="Plant.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
 namespace FarmOnVillage
 {
-    using System;
-
 /// <summary>
 /// Class Plants.
 /// </summary>
-    public class Plants
+    public class Plant
     {
+        /// <summary>
+        /// Gets or sets Id.
+        /// </summary>
+        public int PlantId { get; set; }
+
         /// <summary>
         /// Gets or sets namePlant.
         /// </summary>
@@ -42,27 +45,33 @@ namespace FarmOnVillage
         public int Price { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Plants"/> class.
+        /// Gets or sets Harvest.
         /// </summary>
-        public Plants()
+        public int Harvest { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Plant"/> class.
+        /// </summary>
+        public Plant()
         {
             IsMultyHarvest = true;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Plants"/> class.
+        /// Initializes a new instance of the <see cref="Plant"/> class.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="seasonSeat"></param>
         /// <param name="seasonGathew"></param>
         /// <param name="areaOfSeat"></param>
-        public Plants(string name, int seasonSeat, int seasonGathew, int areaOfSeat)
+        public Plant(string name, int seasonSeat, int seasonGathew, int areaOfSeat)
         {
             NamePlant = name;
             SeasonSeat = seasonSeat;
             SeasonGather = seasonGathew;
             AriaOfSeat = areaOfSeat;
             IsMultyHarvest = true;
+            Harvest = 10;
         }
     }
 }

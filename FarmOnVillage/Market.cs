@@ -4,15 +4,18 @@
 
 namespace FarmOnVillage
 {
-    using System;
     using System.Collections.Generic;
-    using System.Text;
 
     /// <summary>
     /// Class Market.
     /// </summary>
     public class Market
     {
+        /// <summary>
+        /// Gets or sets Id.
+        /// </summary>
+        public int MarketId { get; set; }
+
         /// <summary>
         /// Gets or Sets SeedsToBuy.
         /// </summary>
@@ -21,7 +24,7 @@ namespace FarmOnVillage
         /// <summary>
         /// Gets or Sets AnimalsToBuy.
         /// </summary>
-        public List<Animals> AnimalsToBuy { get; set; }
+        public List<Animal> AnimalsToBuy { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Market"/> class.
@@ -29,7 +32,7 @@ namespace FarmOnVillage
         public Market()
         {
             SeedsToBuy = new List<Seed>();
-            AnimalsToBuy = new List<Animals>();
+            AnimalsToBuy = new List<Animal>();
 
             Seed seedExzemp = new Seed("Apple", 5, 50);
             SeedsToBuy.Add(seedExzemp);
@@ -49,10 +52,10 @@ namespace FarmOnVillage
             ProduktOfAnimal wool = new ProduktOfAnimal("Wool", 10);
             ProduktOfAnimal egg = new ProduktOfAnimal("Egg", 30);
 
-            Animals cow = new Animals("Cow", milk, 150);
-            Animals pig = new Animals("Pig", meat, 100);
-            Animals sheep = new Animals("Sheep", wool, 80);
-            Animals hen = new Animals("Hen", egg, 60);
+            Animal cow = new Animal("Cow", milk, 150);
+            Animal pig = new Animal("Pig", meat, 100);
+            Animal sheep = new Animal("Sheep", wool, 80);
+            Animal hen = new Animal("Hen", egg, 60);
 
             AnimalsToBuy.Add(cow);
             AnimalsToBuy.Add(pig);

@@ -1,18 +1,19 @@
-﻿// <copyright file="Animals.cs" company="PlaceholderCompany">
+﻿// <copyright file="Animal.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
 namespace FarmOnVillage
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     /// <summary>
     /// class Animals.
     /// </summary>
-    public class Animals
+    public class Animal
     {
+        /// <summary>
+        /// Gets or sets Id.
+        /// </summary>
+        public int AnimalId { get; set; }
+
         /// <summary>
         /// Gets or sets NameAnimal.
         /// </summary>
@@ -39,19 +40,19 @@ namespace FarmOnVillage
         public int Price { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Animals"/> class.
+        /// Initializes a new instance of the <see cref="Animal"/> class.
         /// </summary>
-        public Animals()
+        public Animal()
         {
             IsMultyHarvest = true;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Animals"/> class.
+        /// Initializes a new instance of the <see cref="Animal"/> class.
         /// </summary>
         /// <param name="nameAnimal"></param>
         /// <param name="produktAnimal"></param>
-        public Animals(string nameAnimal, ProduktOfAnimal produktAnimal)
+        public Animal(string nameAnimal, ProduktOfAnimal produktAnimal)
         {
             NameAnimal = nameAnimal;
             ProduktAnimal = produktAnimal;
@@ -59,12 +60,12 @@ namespace FarmOnVillage
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Animals"/> class.
+        /// Initializes a new instance of the <see cref="Animal"/> class.
         /// </summary>
         /// <param name="nameAnimal"></param>
         /// <param name="produktAnimal"></param>
         /// <param name="praice"></param>
-        public Animals(string nameAnimal, ProduktOfAnimal produktAnimal, int praice)
+        public Animal(string nameAnimal, ProduktOfAnimal produktAnimal, int praice)
         {
             NameAnimal = nameAnimal;
             ProduktAnimal = produktAnimal;

@@ -13,6 +13,11 @@ namespace FarmOnVillage
     public class Farm
     {
         /// <summary>
+        /// Gets or sets Id.
+        /// </summary>
+        public int FarmId { get; set; }
+
+        /// <summary>
         /// Gets or sets property NameFarm.
         /// </summary>
         public string NameFarm { get; set; }
@@ -40,7 +45,7 @@ namespace FarmOnVillage
         /// <summary>
         /// Gets or sets property your money.
         /// </summary>
-        public int Money { get; set; }
+        public decimal Money { get; set; }
 
         /// <summary>
         /// Gets or sets property your MarketForFarm.
@@ -250,7 +255,7 @@ namespace FarmOnVillage
                 {
                     if (bed.PlantsBed[i].SeasonGather == month)
                     {
-                        StockInCountry.AddFruit(bed.PlantsBed[i].NamePlant);
+                        StockInCountry.AddFruit(bed.PlantsBed[i]);
                         bed.PlantsBed[i].IsMultyHarvest = false;
                         bed.PlantsBed.Remove(bed.PlantsBed[i]);
                     }
@@ -321,11 +326,11 @@ namespace FarmOnVillage
         /// Method BuySomething.
         /// </summary>
         /// <param name="anim"></param>
-        public void BuySomething(Animals anim)
+        public void BuySomething(Animal anim)
         {
             if (Money > anim.Price)
             {
-                Animals newAnim = new Animals(anim.NameAnimal, anim.ProduktAnimal, anim.Price);
+                Animal newAnim = new Animal(anim.NameAnimal, anim.ProduktAnimal, anim.Price);
                 RawMaterialOnFarm.AnimalsFree.Add(newAnim);
                 Money -= anim.Price;
             }
@@ -343,7 +348,7 @@ namespace FarmOnVillage
         {
             if (Money > seed.Price)
             {
-                Plants newPlant = new Plants(seed.PlantsSeed, seed.SeasonSeat, seed.SeasonSeat + 3, 10);
+                Plant newPlant = new Plant(seed.PlantsSeed, seed.SeasonSeat, seed.SeasonSeat + 3, 10);
                 RawMaterialOnFarm.PlantsFree.Add(newPlant);
                 Money -= seed.Price;
             }
@@ -430,10 +435,10 @@ namespace FarmOnVillage
         /// </summary>
         public void Sales()
         {
-            int temp = (StockInCountry.Product.Count * 10) + (StockInCountry.Fruit.Count * 5);
+            int temp = (StockInCountry.ProduktsOfAnimal.Count * 10) + (StockInCountry.Plants.Count * 5);
             Money += temp;
-            StockInCountry.Product.Clear();
-            StockInCountry.Fruit.Clear();
+            StockInCountry.ProduktsOfAnimal.Clear();
+            StockInCountry.Plants.Clear();
             Console.WriteLine($"You earned {temp}$");
         }
     }

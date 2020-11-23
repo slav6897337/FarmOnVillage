@@ -4,15 +4,16 @@
 
 namespace FarmOnVillage
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     /// <summary>
     /// Class seed.
     /// </summary>
     public class Seed
     {
+        /// <summary>
+        /// Gets or sets Id.
+        /// </summary>
+        public int SeedId { get; set; }
+
         /// <summary>
         /// Gets or sets PlantsSeed.
         /// </summary>
@@ -26,7 +27,7 @@ namespace FarmOnVillage
         /// <summary>
         /// Gets or sets Price.
         /// </summary>
-        public int Price { get; set; }
+        public decimal Price { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Seed"/> class.
@@ -41,7 +42,7 @@ namespace FarmOnVillage
         /// <param name="plantsSeed"></param>
         /// <param name="seasonSeat"></param>
         /// <param name="price"></param>
-        public Seed(string plantsSeed, int seasonSeat, int price)
+        public Seed(string plantsSeed, int seasonSeat, decimal price)
         {
             PlantsSeed = plantsSeed;
             SeasonSeat = seasonSeat;

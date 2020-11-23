@@ -5,8 +5,6 @@
 namespace FarmOnVillage
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
 
     /// <summary>
     /// Class Game.

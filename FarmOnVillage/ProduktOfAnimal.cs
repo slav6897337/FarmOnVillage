@@ -4,15 +4,16 @@
 
 namespace FarmOnVillage
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     /// <summary>
     /// class ProduktOfAnimal.
     /// </summary>
     public class ProduktOfAnimal
     {
+        /// <summary>
+        /// Gets or sets Id.
+        /// </summary>
+        public int ProduktOfAnimalId { get; set; }
+
         /// <summary>
         /// Gets or Sets NameProduktOfAnimal.
         /// </summary>
@@ -26,7 +27,7 @@ namespace FarmOnVillage
         /// <summary>
         /// Gets or sets Price.
         /// </summary>
-        public int Price { get; set; }
+        public decimal Price { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProduktOfAnimal"/> class.

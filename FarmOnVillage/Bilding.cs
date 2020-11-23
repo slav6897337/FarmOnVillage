@@ -6,13 +6,17 @@ namespace FarmOnVillage
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
 
     /// <summary>
     /// class Building.
     /// </summary>
     public class Bilding
     {
+        /// <summary>
+        /// Gets or sets Id.
+        /// </summary>
+        public int BildingId { get; set; }
+
         /// <summary>
         /// Gets or Sets NameBilding.
         /// </summary>
@@ -31,14 +35,14 @@ namespace FarmOnVillage
         /// <summary>
         /// Gets or Sets Animals.
         /// </summary>
-        public List<Animals> AnimalsOnBild { get; set; }
+        public List<Animal> AnimalsOnBild { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Bilding"/> class.
         /// </summary>
         public Bilding()
         {
-            AnimalsOnBild = new List<Animals>();
+            AnimalsOnBild = new List<Animal>();
             AriaOfBilding = 100;
             ContentAnimals = 20;
         }
@@ -52,7 +56,7 @@ namespace FarmOnVillage
         /// <param name="animal"></param>
         public Bilding(string nameBuilding, int areaOfBuilding, int conteints)
         {
-            AnimalsOnBild = new List<Animals>();
+            AnimalsOnBild = new List<Animal>();
             NameBilding = nameBuilding;
             AriaOfBilding = conteints;
             ContentAnimals = conteints;
@@ -65,9 +69,9 @@ namespace FarmOnVillage
         /// <param name="areaOfBuilding"></param>
         /// <param name="conteints"></param>
         /// <param name="animal"></param>
-        public Bilding(string nameBuilding, int areaOfBuilding, int conteints, Animals animal)
+        public Bilding(string nameBuilding, int areaOfBuilding, int conteints, Animal animal)
         {
-            AnimalsOnBild = new List<Animals>();
+            AnimalsOnBild = new List<Animal>();
             NameBilding = nameBuilding;
             AriaOfBilding = conteints;
             ContentAnimals = conteints;
@@ -96,7 +100,7 @@ namespace FarmOnVillage
         {
             foreach (var item in AnimalsOnBild)
             {
-                stock.AddProduct(item.NameAnimal);
+                stock.AddProduct(item.ProduktAnimal);
                 Console.WriteLine($"{item.NameAnimal} gave {item.ProduktAnimal.NameProduktOfAnimal} {1}kg");
             }
         }

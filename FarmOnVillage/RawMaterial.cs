@@ -6,7 +6,6 @@ namespace FarmOnVillage
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
 
     /// <summary>
     /// Class Raw material.
@@ -14,22 +13,27 @@ namespace FarmOnVillage
     public class RawMaterial
     {
         /// <summary>
+        /// Gets or sets RawMaterialId.
+        /// </summary>
+        public int RawMaterialId { get; set; }
+
+        /// <summary>
         ///  Gets or sets AnimalsFree.
         /// </summary>
-        public List<Animals> AnimalsFree { get; set; }
+        public List<Animal> AnimalsFree { get; set; }
 
         /// <summary>
         /// Gets or sets PlantsFree.
         /// </summary>
-        public List<Plants> PlantsFree { get; set; }
+        public List<Plant> PlantsFree { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RawMaterial"/> class.
         /// </summary>
         public RawMaterial()
         {
-            AnimalsFree = new List<Animals>();
-            PlantsFree = new List<Plants>();
+            AnimalsFree = new List<Animal>();
+            PlantsFree = new List<Plant>();
         }
 
         /// <summary>

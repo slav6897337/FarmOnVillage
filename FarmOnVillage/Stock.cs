@@ -6,13 +6,17 @@ namespace FarmOnVillage
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
 
     /// <summary>
     /// Class Stock.
     /// </summary>
     public class Stock
     {
+        /// <summary>
+        /// Gets or sets Id.
+        /// </summary>
+        public int StockId { get; set; }
+
         /// <summary>
         /// Gets or Sets VolumeStock.
         /// </summary>
@@ -21,20 +25,20 @@ namespace FarmOnVillage
         /// <summary>
         /// Gets or Sets Product.
         /// </summary>
-        public Dictionary<string, int> Product { get; set; }
+        public List<ProduktOfAnimal> ProduktsOfAnimal { get; set; }
 
         /// <summary>
         /// Gets or Sets Fruit.
         /// </summary>
-        public Dictionary<string, int> Fruit { get; set; }
+        public List<Plant> Plants { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Stock"/> class.
         /// </summary>
         public Stock()
         {
-            Product = new Dictionary<string, int>();
-            Fruit = new Dictionary<string, int>();
+            ProduktsOfAnimal = new List<ProduktOfAnimal>();
+            Plants = new List<Plant>();
             VolumeStock = 1000;
         }
 
@@ -45,14 +49,14 @@ namespace FarmOnVillage
         private int UsedVolumeInStock()
         {
             int usedVolumeInStock = 0;
-            foreach (var item in Product)
+            foreach (var item in ProduktsOfAnimal)
             {
-                usedVolumeInStock += item.Value;
+                usedVolumeInStock += item.Mass;
             }
 
-            foreach (var item in Fruit)
+            foreach (var item in Plants)
             {
-                usedVolumeInStock += item.Value;
+                usedVolumeInStock += item.Harvest;
             }
 
             return usedVolumeInStock;
@@ -69,41 +73,24 @@ namespace FarmOnVillage
         /// <summary>
         /// Method Add product.
         /// </summary>
-        /// <param name="key1"></param>
-        public void AddProduct(string key1)
+        /// <param name="produktOfAnimal"></param>
+        public void AddProduct(ProduktOfAnimal produktOfAnimal)
         {
-            foreach (var prod in Product)
+            ProduktsOfAnimal.Add(new ProduktOfAnimal()
             {
-                if (prod.Key == key1)
-                {
-                    int temp = prod.Value + 1;
-                    Product.Remove(prod.Key);
-                    Product.Add(key1, temp);
-                    return;
-                }
-            }
-
-            Product.Add(key1, 1);
+                NameProduktOfAnimal = produktOfAnimal.NameProduktOfAnimal,
+                Mass = produktOfAnimal.Mass,
+                Price = produktOfAnimal.Price,
+            });
         }
 
         /// <summary>
         /// Method add product on stock.
         /// </summary>
-        /// <param name="key1"></param>
-        public void AddFruit(string key1)
+        /// <param name="plant"></param>
+        public void AddFruit(Plant plant)
         {
-            foreach (var fruit in Fruit)
-            {
-                if (fruit.Key == key1)
-                {
-                    int temp = fruit.Value + 1;
-                    Product.Remove(fruit.Key);
-                    Product.Add(key1, temp);
-                    return;
-                }
-            }
-
-            Fruit.Add(key1, 1);
+            Plants.Add(plant);
         }
     }
 }
