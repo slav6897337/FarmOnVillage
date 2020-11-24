@@ -1,8 +1,4 @@
-﻿// <copyright file="Market.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace FarmOnVillage
+﻿namespace Farm.Data
 {
     using System.Collections.Generic;
 
@@ -26,12 +22,5 @@ namespace FarmOnVillage
         /// </summary>
         public List<Animal> AnimalsToBuy { get; set; } = new List<Animal>();
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Market"/> class.
-        /// </summary>
-        public Market()
-        {
-
-        }
     }
 }

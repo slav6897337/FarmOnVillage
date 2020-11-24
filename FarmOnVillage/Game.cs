@@ -6,6 +6,7 @@ namespace FarmOnVillage
 {
     using System;
     using System.Linq;
+    using Farm.Data;
 
     /// <summary>
     /// Class Game.
@@ -49,21 +50,28 @@ namespace FarmOnVillage
 
             while (game)
             {
-                Console.WriteLine(" 1 - Report of Farm\n 2 - Purchases\n 3 - Report of Raw Material\n 4 - Report of Stock\n 5 - Farm management\n 6 - Money\n 7 - Sales\n Q - quit.\n");
+                Console.WriteLine(" 1 - Report of Farm\n" +
+                                    " 2 - Purchases\n" +
+                                    " 3 - Report of Raw Material\n" +
+                                    " 4 - Report of Stock\n" +
+                                    " 5 - Farm management\n" +
+                                    " 6 - Money\n" +
+                                    " 7 - Sales\n" +
+                                    " Q - quit.\n");
 
                 switch (Console.ReadLine())
                 {
                     case "1":
-                        farm.ReportFarm();
+                        FarmLogics.ReportFarm(farm);
                         break;
                     case "2":
-                        farm.Purchases();
+                        FarmLogics.Purchases(farm);
                         break;
                     case "3":
-                        farm.RawMaterialOnFarm.ReportRawMaterial();
+                        RawMaterialLogics.ReportRawMaterial(farm.RawMaterialOnFarm);
                         break;
                     case "4":
-                        farm.StockInCountry.ReporStock();
+                        StockLogics.ReporStock(farm.StockInCountry);
                         break;
                     case "5":
                         FarmManagement(farm);
@@ -72,7 +80,7 @@ namespace FarmOnVillage
                         Console.WriteLine($"You have {farm.Money}$");
                         break;
                     case "7":
-                        farm.Sales();
+                        FarmLogics.Sales(farm);
                         break;
                     case "q":
                         game = false;
@@ -84,8 +92,8 @@ namespace FarmOnVillage
                             manth = 1;
                         }
 
-                        farm.SmenaSezona();
-                        farm.ChekSeason(manth);
+                        FarmLogics.SmenaSezona(farm);
+                        FarmLogics.ChekSeason(farm, manth);
                         break;
                 }
             }
@@ -105,10 +113,10 @@ namespace FarmOnVillage
                 switch (Console.ReadLine())
                 {
                     case "1":
-                        farm.AddAnimalToBild();
+                        BuildingLogics.AddAnimalToBild(farm);
                         break;
                     case "2":
-                        farm.AddPlantsToBed();
+                        GardenBedLogics.AddPlantsToBed(farm);
                         break;
                     case "3":
                         Realty(farm);
@@ -137,13 +145,13 @@ namespace FarmOnVillage
                 switch (Console.ReadLine())
                 {
                     case "1":
-                        farm.BuyLand();
+                        FarmLogics.BuyLand(farm);
                         break;
                     case "2":
-                        farm.AddBadOnFarm();
+                        FarmLogics.AddBadOnFarm(farm);
                         break;
                     case "3":
-                        farm.AddBildOnFarm();
+                        FarmLogics.AddBildOnFarm(farm);
                         break;
                     case "b":
                         realty = false;

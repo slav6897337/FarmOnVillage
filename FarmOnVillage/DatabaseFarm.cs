@@ -7,6 +7,7 @@ namespace FarmOnVillage
     using System;
     using System.Linq;
     using Microsoft.EntityFrameworkCore;
+    using Farm.Data;
 
     /// <summary>
     /// Work with database.
@@ -40,14 +41,14 @@ namespace FarmOnVillage
                 || !farmContext.Select(x => x.FarmId).Contains(farmId));
 
                 farm = context.Farms
-                              .Include(x => x.BildingFarm)
+                              .Include(x => x.BuildingFarm)
                               .Include(x => x.GardenBedFarm)
                               .Include(x => x.MarketForFarm)
                               .Include(x => x.RawMaterialOnFarm)
                               .Include(x => x.StockInCountry)
                               .Include(x => x.RawMaterialOnFarm.AnimalsFree)
                               .Include(x => x.RawMaterialOnFarm.PlantsFree)
-                              .FirstOrDefault(x => x.FarmId == farmId);     
+                              .FirstOrDefault(x => x.FarmId == farmId); 
 
             }
 
@@ -79,14 +80,18 @@ namespace FarmOnVillage
 
             var stock = new Stock();
 
-            var market = new Market();
-
             var rawMaterial = new RawMaterial();
 
             Farm farm;
 
             using (var context = new FarmContext())
             {
+                Market market = context.Markets
+                                       .Include(x => x.AnimalsToBuy)
+                                       .Include(x => x.SeedsToBuy)
+                                       .Include(y => y.AnimalsToBuy)
+                                       .FirstOrDefault();
+
                 context.Farms.Add(new Farm()
                 {
                     NameFarm = nameFarm,
@@ -111,29 +116,103 @@ namespace FarmOnVillage
         internal static void FillTableMarket()
         {
             var market = new Market();
-            
-            Seed seedExzemp = new Seed("Apple", 5, 50);
+
+            Seed seedExzemp = new Seed()
+            { 
+                PlantsSeed = "Apple",
+                SeasonSeat = 5,
+                Price = 50,
+            };
             market.SeedsToBuy.Add(seedExzemp);
-            seedExzemp = new Seed("Cucumber", 6, 60);
+            seedExzemp = new Seed()
+            {
+                PlantsSeed = "Cucumber",
+                SeasonSeat = 6,
+                Price = 60,
+            };
             market.SeedsToBuy.Add(seedExzemp);
-            seedExzemp = new Seed("Tomato", 6, 70);
+            seedExzemp = new Seed()
+            {
+                PlantsSeed = "Tomato",
+                SeasonSeat = 6,
+                Price = 70,
+            };
             market.SeedsToBuy.Add(seedExzemp);
-            seedExzemp = new Seed("Strawberry", 5, 50);
+            seedExzemp = new Seed()
+            {
+                PlantsSeed = "Strawberry",
+                SeasonSeat = 5,
+                Price = 50,
+            };
             market.SeedsToBuy.Add(seedExzemp);
-            seedExzemp = new Seed("Potatoes", 6, 40);
+            seedExzemp = new Seed()
+            {
+                PlantsSeed = "Potatoes",
+                SeasonSeat = 6,
+                Price = 40,
+            };
             market.SeedsToBuy.Add(seedExzemp);
-            seedExzemp = new Seed("Overnight", 5, 70);
+            seedExzemp = new Seed()
+            {
+                PlantsSeed = "Overnight",
+                SeasonSeat = 5,
+                Price = 70,
+            };
             market.SeedsToBuy.Add(seedExzemp);
 
-            ProduktOfAnimal milk = new ProduktOfAnimal("Milk", 10);
-            ProduktOfAnimal meat = new ProduktOfAnimal("Meat", 100);
-            ProduktOfAnimal wool = new ProduktOfAnimal("Wool", 10);
-            ProduktOfAnimal egg = new ProduktOfAnimal("Egg", 30);
+            ProduktOfAnimal milk = new ProduktOfAnimal()
+            {
+                NameProduktOfAnimal = "Milk",
+                Mass = 10,
+                Price = 30,
+            };
+            ProduktOfAnimal meat = new ProduktOfAnimal()
+            {
+                NameProduktOfAnimal = "Meat",
+                Mass = 100,
+                Price = 100,
+            };
+            ProduktOfAnimal wool = new ProduktOfAnimal()
+            {
+                NameProduktOfAnimal = "Wool",
+                Mass = 10,
+                Price = 30,
+            };
+            ProduktOfAnimal egg = new ProduktOfAnimal()
+            {
+                NameProduktOfAnimal = "Egg",
+                Mass = 30,
+                Price = 30,
+            };
 
-            Animal cow = new Animal("Cow", milk, 150);
-            Animal pig = new Animal("Pig", meat, 100);
-            Animal sheep = new Animal("Sheep", wool, 80);
-            Animal hen = new Animal("Hen", egg, 60);
+            Animal cow = new Animal()
+            {
+                NameAnimal = "Cow",
+                ProduktAnimal = milk,
+                Price = 150,
+                TimeBetweenHarvests = 48
+            };
+            Animal pig = new Animal()
+            {
+                NameAnimal = "Pig",
+                ProduktAnimal = meat,
+                Price = 100,
+                TimeBetweenHarvests = 48
+            };
+            Animal sheep = new Animal()
+            {
+                NameAnimal = "Sheep",
+                ProduktAnimal = wool,
+                Price = 80,
+                TimeBetweenHarvests = 48
+            };
+            Animal hen = new Animal()
+            {
+                NameAnimal = "Hen",
+                ProduktAnimal = egg,
+                Price = 60,
+                TimeBetweenHarvests = 48
+            };
 
             market.AnimalsToBuy.Add(cow);
             market.AnimalsToBuy.Add(pig);
@@ -169,7 +248,12 @@ namespace FarmOnVillage
             }
             while (!decimal.TryParse(Console.ReadLine(), out price));
 
-            var seed = new Seed(nameSeed, seasonSeat, price);
+            var seed = new Seed() 
+            {
+                PlantsSeed = nameSeed,
+                SeasonSeat = seasonSeat,
+                Price = price
+            };
 
             using (var context = new FarmContext())
             {
@@ -230,17 +314,31 @@ namespace FarmOnVillage
             }
             while (!int.TryParse(System.Console.ReadLine(), out massProduct));
 
-            decimal price;
+            decimal priceProduct;
             do
             {
-                System.Console.WriteLine("Please enter price");
+                System.Console.WriteLine("Please enter price product");
             }
-            while (!decimal.TryParse(System.Console.ReadLine(), out price));
+            while (!decimal.TryParse(System.Console.ReadLine(), out priceProduct));
 
-            var animal = new Animal(
-                nameAnimal,
-                new ProduktOfAnimal(nameProductOfAnimal, massProduct),
-                price);
+            decimal priceAnimal;
+            do
+            {
+                System.Console.WriteLine("Please enter price Animal");
+            }
+            while (!decimal.TryParse(System.Console.ReadLine(), out priceAnimal));
+
+            var animal = new Animal()
+            {
+                NameAnimal = nameAnimal,
+                Price = priceAnimal,
+                ProduktAnimal = new ProduktOfAnimal()
+                {
+                    NameProduktOfAnimal = nameProductOfAnimal,
+                    Mass = massProduct,
+                    Price = priceProduct
+                }
+            };
 
             using (var context = new FarmContext())
             {

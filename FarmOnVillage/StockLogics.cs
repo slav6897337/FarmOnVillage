@@ -6,52 +6,26 @@ namespace FarmOnVillage
 {
     using System;
     using System.Collections.Generic;
+    using Farm.Data;
 
     /// <summary>
     /// Class Stock.
     /// </summary>
-    public class Stock
+    public static class StockLogics
     {
-        /// <summary>
-        /// Gets or sets Id.
-        /// </summary>
-        public int StockId { get; set; }
-
-        /// <summary>
-        /// Gets or Sets VolumeStock.
-        /// </summary>
-        public int VolumeStock { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Product.
-        /// </summary>
-        public List<ProduktOfAnimal> ProduktsOfAnimal { get; set; } = new List<ProduktOfAnimal>();
-
-        /// <summary>
-        /// Gets or Sets Fruit.
-        /// </summary>
-        public List<Plant> Plants { get; set; } = new List<Plant>();
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Stock"/> class.
-        /// </summary>
-        public Stock()
-        {
-        }
-
         /// <summary>
         /// Method calculate used Volume in stock.
         /// </summary>
         /// <returns> Used area.</returns>
-        private int UsedVolumeInStock()
+        private static int UsedVolumeInStock(Stock stock)
         {
             int usedVolumeInStock = 0;
-            foreach (var item in ProduktsOfAnimal)
+            foreach (var item in stock.ProduktsOfAnimal)
             {
                 usedVolumeInStock += item.Mass;
             }
 
-            foreach (var item in Plants)
+            foreach (var item in stock.Plants)
             {
                 usedVolumeInStock += item.Harvest;
             }
@@ -62,18 +36,19 @@ namespace FarmOnVillage
         /// <summary>
         /// Console write report of Stock.
         /// </summary>
-        public void ReporStock()
+        public static void ReporStock(Stock stock)
         {
-            Console.WriteLine($"Report of Stock Volume Stock {VolumeStock}Kg, percentage of warehouse Stock: {UsedVolumeInStock() * 100 / VolumeStock}%\n");
+            Console.WriteLine($"Report of Stock Volume Stock {stock.VolumeStock}Kg," +
+                $" percentage of warehouse Stock: {UsedVolumeInStock(stock) * 100 / stock.VolumeStock}%\n");
         }
 
         /// <summary>
         /// Method Add product.
         /// </summary>
         /// <param name="produktOfAnimal"></param>
-        public void AddProduct(ProduktOfAnimal produktOfAnimal)
+        public static void AddProduct(Stock stock, ProduktOfAnimal produktOfAnimal)
         {
-            ProduktsOfAnimal.Add(new ProduktOfAnimal()
+            stock.ProduktsOfAnimal.Add(new ProduktOfAnimal()
             {
                 NameProduktOfAnimal = produktOfAnimal.NameProduktOfAnimal,
                 Mass = produktOfAnimal.Mass,
@@ -85,9 +60,9 @@ namespace FarmOnVillage
         /// Method add product on stock.
         /// </summary>
         /// <param name="plant"></param>
-        public void AddFruit(Plant plant)
+        public static void AddFruit(Stock stock, Plant plant)
         {
-            Plants.Add(plant);
+            stock.Plants.Add(plant);
         }
     }
 }
