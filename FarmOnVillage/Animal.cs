@@ -27,7 +27,7 @@ namespace FarmOnVillage
         /// <summary>
         /// Gets or sets a value indicating whether IsMultyHarvest.
         /// </summary>
-        public bool IsMultyHarvest { get; set; }
+        public bool IsMultyHarvest { get; set; } = true;
 
         /// <summary>
         /// Gets or sets TimeBetweenHarvests.
@@ -44,7 +44,7 @@ namespace FarmOnVillage
         /// </summary>
         public Animal()
         {
-            IsMultyHarvest = true;
+
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace FarmOnVillage
         {
             NameAnimal = nameAnimal;
             ProduktAnimal = produktAnimal;
-            IsMultyHarvest = true;
+
         }
 
         /// <summary>

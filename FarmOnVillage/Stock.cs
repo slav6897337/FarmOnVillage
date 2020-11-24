@@ -37,7 +37,6 @@ namespace FarmOnVillage
         /// </summary>
         public Stock()
         {
-            VolumeStock = 1000;
         }
 
         /// <summary>

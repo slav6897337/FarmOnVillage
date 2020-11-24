@@ -25,7 +25,7 @@ namespace FarmOnVillage
         /// <summary>
         /// Gets or sets property Square.
         /// </summary>
-        public List<Plant> PlantsBed { get; set; }
+        public List<Plant> PlantsBed { get; set; } = new List<Plant>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GardenBed"/> class.

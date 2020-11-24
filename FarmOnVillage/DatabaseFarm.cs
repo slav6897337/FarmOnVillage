@@ -111,6 +111,35 @@ namespace FarmOnVillage
         internal static void FillTableMarket()
         {
             var market = new Market();
+            
+            Seed seedExzemp = new Seed("Apple", 5, 50);
+            market.SeedsToBuy.Add(seedExzemp);
+            seedExzemp = new Seed("Cucumber", 6, 60);
+            market.SeedsToBuy.Add(seedExzemp);
+            seedExzemp = new Seed("Tomato", 6, 70);
+            market.SeedsToBuy.Add(seedExzemp);
+            seedExzemp = new Seed("Strawberry", 5, 50);
+            market.SeedsToBuy.Add(seedExzemp);
+            seedExzemp = new Seed("Potatoes", 6, 40);
+            market.SeedsToBuy.Add(seedExzemp);
+            seedExzemp = new Seed("Overnight", 5, 70);
+            market.SeedsToBuy.Add(seedExzemp);
+
+            ProduktOfAnimal milk = new ProduktOfAnimal("Milk", 10);
+            ProduktOfAnimal meat = new ProduktOfAnimal("Meat", 100);
+            ProduktOfAnimal wool = new ProduktOfAnimal("Wool", 10);
+            ProduktOfAnimal egg = new ProduktOfAnimal("Egg", 30);
+
+            Animal cow = new Animal("Cow", milk, 150);
+            Animal pig = new Animal("Pig", meat, 100);
+            Animal sheep = new Animal("Sheep", wool, 80);
+            Animal hen = new Animal("Hen", egg, 60);
+
+            market.AnimalsToBuy.Add(cow);
+            market.AnimalsToBuy.Add(pig);
+            market.AnimalsToBuy.Add(sheep);
+            market.AnimalsToBuy.Add(hen);            
+
             using (var context = new FarmContext())
             {
                 context.Markets.Add(market);

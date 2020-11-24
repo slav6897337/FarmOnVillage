@@ -1,12 +1,8 @@
-﻿// <copyright file="Plant.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace FarmOnVillage
+﻿namespace Farm.Data
 {
-/// <summary>
-/// Class Plants.
-/// </summary>
+    /// <summary>
+    /// Class Plants.
+    /// </summary>
     public class Plant
     {
         /// <summary>
@@ -48,28 +44,5 @@ namespace FarmOnVillage
         /// Gets or sets Harvest.
         /// </summary>
         public int Harvest { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Plant"/> class.
-        /// </summary>
-        public Plant()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Plant"/> class.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="seasonSeat"></param>
-        /// <param name="seasonGathew"></param>
-        /// <param name="areaOfSeat"></param>
-        public Plant(string name, int seasonSeat, int seasonGathew, int areaOfSeat)
-        {
-            NamePlant = name;
-            SeasonSeat = seasonSeat;
-            SeasonGather = seasonGathew;
-            AriaOfSeat = areaOfSeat;
-            Harvest = 10;
-        }
     }
 }

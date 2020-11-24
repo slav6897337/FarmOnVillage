@@ -35,7 +35,7 @@ namespace FarmOnVillage
         /// <summary>
         /// Gets or Sets Animals.
         /// </summary>
-        public List<Animal> AnimalsOnBild { get; set; }
+        public List<Animal> AnimalsOnBild { get; set; } = new List<Animal>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Bilding"/> class.

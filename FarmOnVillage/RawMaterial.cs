@@ -4,6 +4,7 @@
 
 namespace FarmOnVillage
 {
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -40,13 +41,20 @@ namespace FarmOnVillage
         /// </summary>
         public void ReportRawMaterial()
         {
-            
-                foreach (var animal in AnimalsFree)
+            var rawmat = new RawMaterial();
+            using (var context = new FarmContext())
+            {
+                rawmat = context.RawMaterials
+                                    .Include(x => x.PlantsFree)
+                                    .Include(x => x.AnimalsFree)
+                                    .FirstOrDefault(x => x.RawMaterialId == RawMaterialId);
+            }
+                foreach (var animal in rawmat.AnimalsFree)
                 {
                     Console.WriteLine($"{animal.NameAnimal} on Raw Material");
                 }
 
-            foreach (var plant in PlantsFree)
+            foreach (var plant in rawmat.PlantsFree)
             {
                 Console.WriteLine($"{plant.NamePlant} on Raw Material");
             }
