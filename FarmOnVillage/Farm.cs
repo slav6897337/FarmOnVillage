@@ -6,6 +6,8 @@ namespace FarmOnVillage
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using Microsoft.EntityFrameworkCore;
 
     /// <summary>
     /// Class that contains Farm.
@@ -30,12 +32,12 @@ namespace FarmOnVillage
         /// <summary>
         /// Gets or sets property GardenBed.
         /// </summary>
-        public List<GardenBed> GardenBedFarm { get; set; }
+        public List<GardenBed> GardenBedFarm { get; set; } = new List<GardenBed>();
 
         /// <summary>
         /// Gets or sets property BildingFarm.
         /// </summary>
-        public List<Bilding> BildingFarm { get; set; }
+        public List<Bilding> BildingFarm { get; set; } = new List<Bilding>();
 
         /// <summary>
         /// Gets or sets property Stock.
@@ -57,16 +59,33 @@ namespace FarmOnVillage
         /// </summary>
         public RawMaterial RawMaterialOnFarm { get; set; }
 
+        internal void SaveChanges()
+        {
+            using (var context = new FarmContext())
+            {
+                var farmDb = context.Farms.FirstOrDefault(x => x.FarmId == FarmId);
+                if (farmDb.Area != Area)
+                    farmDb.Area = Area;
+                if (farmDb?.BildingFarm != BildingFarm)
+                    farmDb.BildingFarm = BildingFarm;
+                if (farmDb?.GardenBedFarm != GardenBedFarm)
+                    farmDb.GardenBedFarm = GardenBedFarm;
+                if (farmDb.Money != Money)
+                    farmDb.Money = Money;
+                if (farmDb?.RawMaterialOnFarm != RawMaterialOnFarm)
+                    farmDb.RawMaterialOnFarm = RawMaterialOnFarm;
+                if (farmDb?.StockInCountry != StockInCountry)
+                    farmDb.StockInCountry = StockInCountry;
+
+                context.SaveChanges();
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Farm"/> class.
         /// </summary>
         public Farm()
         {
-            NameFarm = "Igogo";
-            Area = 100;
-            GardenBedFarm = new List<GardenBed>();
-            BildingFarm = new List<Bilding>();
-            Money = 1000;
         }
 
         /// <summary>
@@ -151,7 +170,8 @@ namespace FarmOnVillage
                 Bilding build = new Bilding(nameBuilding, ariaOfBuilding, conteints);
                 BildingFarm.Add(build);
                 Money -= 500;
-                Console.WriteLine("Mew Building add");
+                SaveChanges();
+                Console.WriteLine("Mew Building added");
             }
             else
             {
@@ -173,16 +193,16 @@ namespace FarmOnVillage
             Console.WriteLine("Please choose in what build do you wont add animal");
             for (int i = 0; i < BildingFarm.Count; i++)
             {
-                Console.WriteLine($"{i} - {BildingFarm[i].NameBilding}");
+                Console.WriteLine($"{i + 1} - {BildingFarm[i].NameBilding}");
             }
 
             int building;
-            while (!int.TryParse(Console.ReadLine(), out building) || building < 0 || building >= BildingFarm.Count)
+            while (!int.TryParse(Console.ReadLine(), out building) || building - 1 < 0 || building - 1 >= BildingFarm.Count)
             {
                 Console.WriteLine("Please enter correctly data");
             }
 
-            ChecfreeAnimal(BildingFarm[building]);
+            ChecfreeAnimal(BildingFarm[building - 1]);
         }
 
         /// <summary>
@@ -199,16 +219,16 @@ namespace FarmOnVillage
             Console.WriteLine("Please choose in what Garden bed do you wont add plants");
             for (int i = 0; i < GardenBedFarm.Count; i++)
             {
-                Console.WriteLine($"{i} - Garden Bed");
+                Console.WriteLine($"{i + 1} - Garden Bed");
             }
 
             int bed;
-            while (!int.TryParse(Console.ReadLine(), out bed) || bed < 0 || bed >= GardenBedFarm.Count)
+            while (!int.TryParse(Console.ReadLine(), out bed) || bed - 1 < 0 || bed - 1 >= GardenBedFarm.Count)
             {
                 Console.WriteLine("Please enter correctly data");
             }
 
-            ChecfreeGardenBed(GardenBedFarm[bed]);
+            ChecfreeGardenBed(GardenBedFarm[bed - 1]);
         }
 
         /// <summary>
@@ -224,6 +244,7 @@ namespace FarmOnVillage
                 GardenBed bed = new GardenBed(square);
                 GardenBedFarm.Add(bed);
                 Console.WriteLine("Mew Garden bed add");
+                SaveChanges();
             }
             else
             {
@@ -235,12 +256,13 @@ namespace FarmOnVillage
         /// Method add product on stock.
         /// </summary>
         /// <param name="stock"></param>
-        public void SmenaSezona(Stock stock)
+        public void SmenaSezona()
         {
             foreach (var item in BildingFarm)
             {
-                item.ProductonStock(stock);
+                item.ProductonStock(StockInCountry);
             }
+            SaveChanges();
         }
 
         /// <summary>
@@ -258,6 +280,7 @@ namespace FarmOnVillage
                         StockInCountry.AddFruit(bed.PlantsBed[i]);
                         bed.PlantsBed[i].IsMultyHarvest = false;
                         bed.PlantsBed.Remove(bed.PlantsBed[i]);
+                        SaveChanges();                        
                     }
                 }
             }
@@ -273,6 +296,7 @@ namespace FarmOnVillage
             int temp = int.Parse(Console.ReadLine());
             Area += temp;
             Money -= temp * 10;
+            SaveChanges();
         }
 
         /// <summary>
@@ -289,32 +313,32 @@ namespace FarmOnVillage
                 Console.WriteLine("Please choose animal");
                 for (int i = 0; i < MarketForFarm.AnimalsToBuy.Count; i++)
                 {
-                    Console.WriteLine($"{i} - {MarketForFarm.AnimalsToBuy[i].NameAnimal}");
+                    Console.WriteLine($"{i + 1} - {MarketForFarm.AnimalsToBuy[i].NameAnimal}");
                 }
 
                 int temp;
-                while (!int.TryParse(Console.ReadLine(), out temp) || temp < 0 || temp >= MarketForFarm.AnimalsToBuy.Count)
+                while (!int.TryParse(Console.ReadLine(), out temp) || temp - 1 < 0 || temp - 1 >= MarketForFarm.AnimalsToBuy.Count)
                 {
                     Console.WriteLine("Please enter correctly data");
                 }
 
-                BuySomething(MarketForFarm.AnimalsToBuy[temp]);
+                BuySomething(MarketForFarm.AnimalsToBuy[temp - 1]);
             }
             else if (choose == "2")
             {
                 Console.WriteLine("Please choose seeds");
                 for (int i = 0; i < MarketForFarm.SeedsToBuy.Count; i++)
                 {
-                    Console.WriteLine($"{i} - {MarketForFarm.SeedsToBuy[i].PlantsSeed}");
+                    Console.WriteLine($"{i + 1} - {MarketForFarm.SeedsToBuy[i].PlantsSeed}");
                 }
 
                 int temp;
-                while (!int.TryParse(Console.ReadLine(), out temp) || temp < 0 || temp >= MarketForFarm.SeedsToBuy.Count)
+                while (!int.TryParse(Console.ReadLine(), out temp) || temp - 1 < 0 || temp - 1 >= MarketForFarm.SeedsToBuy.Count)
                 {
                     Console.WriteLine("Please enter correctly data");
                 }
 
-                BuySomething(MarketForFarm.SeedsToBuy[temp]);
+                BuySomething(MarketForFarm.SeedsToBuy[temp - 1]);
             }
             else
             {
@@ -333,6 +357,7 @@ namespace FarmOnVillage
                 Animal newAnim = new Animal(anim.NameAnimal, anim.ProduktAnimal, anim.Price);
                 RawMaterialOnFarm.AnimalsFree.Add(newAnim);
                 Money -= anim.Price;
+                SaveChanges();
             }
             else
             {
@@ -351,6 +376,7 @@ namespace FarmOnVillage
                 Plant newPlant = new Plant(seed.PlantsSeed, seed.SeasonSeat, seed.SeasonSeat + 3, 10);
                 RawMaterialOnFarm.PlantsFree.Add(newPlant);
                 Money -= seed.Price;
+                SaveChanges();
             }
             else
             {
@@ -386,7 +412,8 @@ namespace FarmOnVillage
             {
                 bilding.AnimalsOnBild.Add(RawMaterialOnFarm.AnimalsFree[temp]);
                 RawMaterialOnFarm.AnimalsFree.RemoveAt(temp);
-                Console.WriteLine("New animals add");
+                SaveChanges();
+                Console.WriteLine("New animals added");
             }
             else
             {
@@ -421,8 +448,9 @@ namespace FarmOnVillage
             if (bed.ChekFreeBed(RawMaterialOnFarm.PlantsFree[temp]))
             {
                 bed.PlantsBed.Add(RawMaterialOnFarm.PlantsFree[temp]);
-                Console.WriteLine("Mew Plant add");
+                Console.WriteLine("Mew Plant added");
                 RawMaterialOnFarm.PlantsFree.RemoveAt(temp);
+                SaveChanges();
             }
             else
             {
@@ -435,11 +463,18 @@ namespace FarmOnVillage
         /// </summary>
         public void Sales()
         {
+            if (StockInCountry == null)
+            {
+                Console.WriteLine("Stock empty");
+                return;
+            }
+                
             int temp = (StockInCountry.ProduktsOfAnimal.Count * 10) + (StockInCountry.Plants.Count * 5);
             Money += temp;
             StockInCountry.ProduktsOfAnimal.Clear();
             StockInCountry.Plants.Clear();
             Console.WriteLine($"You earned {temp}$");
+            SaveChanges();
         }
     }
 }

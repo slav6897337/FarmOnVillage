@@ -6,6 +6,7 @@ namespace FarmOnVillage
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Class Raw material.
@@ -20,20 +21,18 @@ namespace FarmOnVillage
         /// <summary>
         ///  Gets or sets AnimalsFree.
         /// </summary>
-        public List<Animal> AnimalsFree { get; set; }
+        public List<Animal> AnimalsFree { get; set; } = new List<Animal>();
 
         /// <summary>
         /// Gets or sets PlantsFree.
         /// </summary>
-        public List<Plant> PlantsFree { get; set; }
+        public List<Plant> PlantsFree { get; set; } = new List<Plant>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RawMaterial"/> class.
         /// </summary>
         public RawMaterial()
         {
-            AnimalsFree = new List<Animal>();
-            PlantsFree = new List<Plant>();
         }
 
         /// <summary>
@@ -41,10 +40,11 @@ namespace FarmOnVillage
         /// </summary>
         public void ReportRawMaterial()
         {
-            foreach (var animal in AnimalsFree)
-            {
-                Console.WriteLine($"{animal.NameAnimal} on Raw Material");
-            }
+            
+                foreach (var animal in AnimalsFree)
+                {
+                    Console.WriteLine($"{animal.NameAnimal} on Raw Material");
+                }
 
             foreach (var plant in PlantsFree)
             {

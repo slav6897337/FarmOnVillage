@@ -25,20 +25,18 @@ namespace FarmOnVillage
         /// <summary>
         /// Gets or Sets Product.
         /// </summary>
-        public List<ProduktOfAnimal> ProduktsOfAnimal { get; set; }
+        public List<ProduktOfAnimal> ProduktsOfAnimal { get; set; } = new List<ProduktOfAnimal>();
 
         /// <summary>
         /// Gets or Sets Fruit.
         /// </summary>
-        public List<Plant> Plants { get; set; }
+        public List<Plant> Plants { get; set; } = new List<Plant>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Stock"/> class.
         /// </summary>
         public Stock()
         {
-            ProduktsOfAnimal = new List<ProduktOfAnimal>();
-            Plants = new List<Plant>();
             VolumeStock = 1000;
         }
 

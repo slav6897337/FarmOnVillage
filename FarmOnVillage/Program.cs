@@ -14,14 +14,11 @@ namespace FarmOnVillage
         /// </summary>
         private static void Main()
         {
-            DatabaseFarm.ShowTableMarket();
-            DatabaseFarm.AddSeed();
-            DatabaseFarm.ShowTableMarket();
-
-            /*DatabaseFarm.FillTableMarket();
-            DatabaseFarm.AddSeed();*/
-            //Game.StartGame();
-
+            Game.StartMenu();
+            /*DatabaseFarm.ShowTableMarket();
+              DatabaseFarm.ShowTableMarket();
+              DatabaseFarm.FillTableMarket();
+              Game.StartGame();*/
         }
     }
 }

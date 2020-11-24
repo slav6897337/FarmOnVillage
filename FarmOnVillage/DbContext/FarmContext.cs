@@ -11,24 +11,54 @@ namespace FarmOnVillage
     /// </summary>
     internal class FarmContext : DbContext
     {
+        /// <summary>
+        /// Gets or sets dbSet.
+        /// </summary>
         public DbSet<ProduktOfAnimal> ProduktsOfAnimal { get; set; }
 
+        /// <summary>
+        /// Gets or sets dbSet.
+        /// </summary>
         public DbSet<Animal> Animals { get; set; }
 
+        /// <summary>
+        /// Gets or sets dbSet.
+        /// </summary>
         public DbSet<Bilding> Bildings { get; set; }
 
+        /// <summary>
+        /// Gets or sets dbSet.
+        /// </summary>
         public DbSet<Plant> Plants { get; set; }
 
+        /// <summary>
+        /// Gets or sets dbSet.
+        /// </summary>
         public DbSet<GardenBed> GardenBeds { get; set; }
 
+        /// <summary>
+        /// Gets or sets dbSet.
+        /// </summary>
         public DbSet<Seed> Seeds { get; set; }
 
+        /// <summary>
+        /// Gets or sets dbSet.
+        /// </summary>
         public DbSet<Market> Markets { get; set; }
 
+        /// <summary>
+        /// Gets or sets dbSet.
+        /// </summary>
         public DbSet<RawMaterial> RawMaterials { get; set; }
 
+        /// <summary>
+        /// Gets or sets dbSet.
+        /// </summary>
         public DbSet<Farm> Farms { get; set; }
 
+        /// <summary>
+        /// Gets or sets dbSet.
+        /// </summary>
         public DbSet<Stock> Stocks { get; set; }
 
         /// <summary>

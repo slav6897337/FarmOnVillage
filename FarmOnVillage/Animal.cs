@@ -37,7 +37,7 @@ namespace FarmOnVillage
         /// <summary>
         /// Gets or sets Price.
         /// </summary>
-        public int Price { get; set; }
+        public decimal Price { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Animal"/> class.
@@ -65,7 +65,7 @@ namespace FarmOnVillage
         /// <param name="nameAnimal"></param>
         /// <param name="produktAnimal"></param>
         /// <param name="praice"></param>
-        public Animal(string nameAnimal, ProduktOfAnimal produktAnimal, int praice)
+        public Animal(string nameAnimal, ProduktOfAnimal produktAnimal, decimal praice)
         {
             NameAnimal = nameAnimal;
             ProduktAnimal = produktAnimal;

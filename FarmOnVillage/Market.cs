@@ -19,21 +19,18 @@ namespace FarmOnVillage
         /// <summary>
         /// Gets or Sets SeedsToBuy.
         /// </summary>
-        public List<Seed> SeedsToBuy { get; set; }
+        public List<Seed> SeedsToBuy { get; set; } = new List<Seed>();
 
         /// <summary>
         /// Gets or Sets AnimalsToBuy.
         /// </summary>
-        public List<Animal> AnimalsToBuy { get; set; }
+        public List<Animal> AnimalsToBuy { get; set; } = new List<Animal>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Market"/> class.
         /// </summary>
         public Market()
         {
-            SeedsToBuy = new List<Seed>();
-            AnimalsToBuy = new List<Animal>();
-
             Seed seedExzemp = new Seed("Apple", 5, 50);
             SeedsToBuy.Add(seedExzemp);
             seedExzemp = new Seed("Cucumber", 6, 60);
