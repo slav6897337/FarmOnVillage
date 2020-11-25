@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibrary1\Farm.Data.csproj" />
+    <ProjectReference Include="..\Farm.Data\Farm.Data.csproj" />
   </ItemGroup>
 
 </Project>

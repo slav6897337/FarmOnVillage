@@ -1,11 +1,11 @@
-﻿namespace FarmOnVillage
+﻿namespace Farm.Data
 {
     using Microsoft.EntityFrameworkCore;
 
     /// <summary>
     /// Context.
     /// </summary>
-    internal class FarmContext : DbContext
+    public class FarmContext : DbContext
     {
         /// <summary>
         /// Gets or sets dbSet.
@@ -20,7 +20,7 @@
         /// <summary>
         /// Gets or sets dbSet.
         /// </summary>
-        public DbSet<Bilding> Bildings { get; set; }
+        public DbSet<Building> Buildings { get; set; }
 
         /// <summary>
         /// Gets or sets dbSet.
@@ -63,7 +63,7 @@
         /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=.\SQL_EXPRESS;Database=FarmDB;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=FarmDB;Trusted_Connection=True;");
         }
     }
 }
