@@ -8,6 +8,7 @@
     /// </summary>
     public class Stock
     {
+        const int volumeStok = 1000;
         /// <summary>
         /// Gets or sets Id.
         /// </summary>
@@ -16,7 +17,7 @@
         /// <summary>
         /// Gets or Sets VolumeStock.
         /// </summary>
-        public int VolumeStock { get; set; }
+        public int VolumeStock { get; set; } = volumeStok;
 
         /// <summary>
         /// Gets or Sets Product.

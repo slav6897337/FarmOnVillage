@@ -63,7 +63,7 @@ namespace FarmOnVillage
         /// </summary>
         public static void ReportFarm(Farm farm)
         {
-            Console.WriteLine($"This is the farm {farm.NameFarm}, area {farm.Area}, " +
+            Console.WriteLine($"\n\nThis is the farm {farm.NameFarm}, area {farm.Area}, " +
                 $"{farm.BuildingFarm.Count} building and {farm.GardenBedFarm.Count} Garden Beds, " +
                 $"Percent used area: {UsedAreaFarm(farm) * 100 / farm.Area}%");
             foreach (var item in farm.GardenBedFarm)
@@ -104,15 +104,15 @@ namespace FarmOnVillage
         {
             if (farm.Money < 500)
             {
-                Console.WriteLine("Sorry you mast have 500$");
+                Console.WriteLine("\t Sorry you mast have 500$");
                 return;
             }
 
-            Console.WriteLine("Enter name building");
+            Console.WriteLine("\t Enter name building");
             string nameBuilding = Console.ReadLine();
-            Console.WriteLine("Enter area of seat");
+            Console.WriteLine("\t Enter area of seat");
             int ariaOfBuilding = int.Parse(Console.ReadLine());
-            Console.WriteLine("Enter capacity");
+            Console.WriteLine("\t Enter capacity");
             int conteints = int.Parse(Console.ReadLine());
 
             if (UsedAreaOnFarm(farm) + ariaOfBuilding < farm.Area)
@@ -126,11 +126,11 @@ namespace FarmOnVillage
                 farm.BuildingFarm.Add(build);
                 farm.Money -= 500;
                 SaveChanges(farm);
-                Console.WriteLine("Mew Building added");
+                Console.WriteLine("\t Mew Building added");
             }
             else
             {
-                Console.WriteLine("Sorry Area busy. You must buy more land.");
+                Console.WriteLine("\t Sorry Area busy. You must buy more land.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace FarmOnVillage
         /// </summary>
         public static void AddBadOnFarm(Farm farm)
         {
-            Console.WriteLine("Enter Square garden bed");
+            Console.WriteLine("\t Enter Square garden bed");
             int square = int.Parse(Console.ReadLine());
 
             if (UsedAreaOnFarm(farm) + square < farm.Area)
@@ -150,12 +150,12 @@ namespace FarmOnVillage
                 };
 
                 farm.GardenBedFarm.Add(bed);
-                Console.WriteLine("Mew Garden bed add");
+                Console.WriteLine("\t Mew Garden bed add");
                 SaveChanges(farm);
             }
             else
             {
-                Console.WriteLine("Sorry Area busy.");
+                Console.WriteLine("\t Sorry Area busy.");
             }
         }
 
@@ -201,7 +201,7 @@ namespace FarmOnVillage
             int temp;
             do
             {
-                Console.WriteLine("Haw many land you want to buy?");
+                Console.WriteLine("\n\n\t Haw many land you want to buy?");
             }
             while (!int.TryParse(Console.ReadLine(), out temp));
 
@@ -215,16 +215,20 @@ namespace FarmOnVillage
         /// </summary>
         public static void Purchases(Farm farm)
         {
-            Console.WriteLine("What will you want to buy? 1 - Animals, 2 - Seeds");
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\n\n\t What will you want to buy?\n" +
+                              "\t 1 - Animals\n" +
+                              "\t 2 - Seeds\n");
 
             string choose = Console.ReadLine();
 
             if (choose == "1")
             {
-                Console.WriteLine("Please choose animal");
+                Console.WriteLine("\n\n\t Please choose animal");
                 for (int i = 0; i < farm.MarketForFarm.AnimalsToBuy.Count; i++)
                 {
-                    Console.WriteLine($"{i + 1} - {farm.MarketForFarm.AnimalsToBuy[i].NameAnimal}");
+                    Console.WriteLine($"\t{i + 1} - {farm.MarketForFarm.AnimalsToBuy[i].NameAnimal}");
                 }
 
                 int temp;
@@ -232,17 +236,17 @@ namespace FarmOnVillage
                     || temp - 1 < 0 
                     || temp - 1 >= farm.MarketForFarm.AnimalsToBuy.Count)
                 {
-                    Console.WriteLine("Please enter correctly data");
+                    Console.WriteLine("\t Please enter correctly data");
                 }
 
                 BuySomething(farm, farm.MarketForFarm.AnimalsToBuy[temp - 1]);
             }
             else if (choose == "2")
             {
-                Console.WriteLine("Please choose seeds");
+                Console.WriteLine("\n\n\t Please choose seeds");
                 for (int i = 0; i < farm.MarketForFarm.SeedsToBuy.Count; i++)
                 {
-                    Console.WriteLine($"{i + 1} - {farm.MarketForFarm.SeedsToBuy[i].PlantsSeed}");
+                    Console.WriteLine($"\t{i + 1} - {farm.MarketForFarm.SeedsToBuy[i].PlantsSeed}");
                 }
 
                 int temp;
@@ -250,14 +254,14 @@ namespace FarmOnVillage
                     || temp - 1 < 0 
                     || temp - 1 >= farm.MarketForFarm.SeedsToBuy.Count)
                 {
-                    Console.WriteLine("Please enter correctly data");
+                    Console.WriteLine("\t Please enter correctly data");
                 }
 
                 BuySomething(farm, farm.MarketForFarm.SeedsToBuy[temp - 1]);
             }
             else
             {
-                Console.WriteLine("Sorry we don't have it.");
+                Console.WriteLine("\t Sorry we don't have it.");
             }
         }
 
@@ -287,7 +291,7 @@ namespace FarmOnVillage
             }
             else
             {
-                Console.WriteLine("Sorry you don't have money.");
+                Console.WriteLine("\n\t Sorry you don't have money.");
             }
         }
 
@@ -313,7 +317,7 @@ namespace FarmOnVillage
             }
             else
             {
-                Console.WriteLine("Sorry you don't have money.");
+                Console.WriteLine("\t Sorry you don't have money.");
             }
         }
 
@@ -325,34 +329,52 @@ namespace FarmOnVillage
         {
             if (farm.RawMaterialOnFarm.AnimalsFree.Count == 0)
             {
-                Console.WriteLine("Please buy Animals");
+                Console.WriteLine("\n\t Please buy Animals");
                 return;
             }
 
-            Console.WriteLine("Choose what Animals do you want to add");
-            for (int i = 0; i < farm.RawMaterialOnFarm.AnimalsFree.Count; i++)
+            Console.WriteLine("\nChoose what Animals do you want to add");
+            foreach (var item in farm.RawMaterialOnFarm.AnimalsFree)
             {
-                Console.WriteLine($"  {i} - {farm.RawMaterialOnFarm.AnimalsFree[i].NameAnimal}");
+                Console.WriteLine($"\t {item.AnimalId} - {item.NameAnimal}");
             }
 
             int temp;
             while (!int.TryParse(Console.ReadLine(), out temp) 
-                || temp < 0 
-                || temp >= farm.RawMaterialOnFarm.AnimalsFree.Count)
+                || farm.RawMaterialOnFarm.AnimalsFree.Select(x => x.AnimalId).Min(x => x) < 0 
+                || temp > farm.RawMaterialOnFarm.AnimalsFree.Select(x => x.AnimalId).Max(x => x))
             {
-                Console.WriteLine("Please enter correctly data");
+                Console.WriteLine("\n\t Please enter correctly data");
             }
+
+            Animal animal = farm.RawMaterialOnFarm
+                                .AnimalsFree
+                                .FirstOrDefault(x => x.AnimalId == temp);
 
             if (bilding.AnimalsOnBild.Count + 1 < bilding.ContentAnimals)
             {
-                bilding.AnimalsOnBild.Add(farm.RawMaterialOnFarm.AnimalsFree[temp]);
-                farm.RawMaterialOnFarm.AnimalsFree.RemoveAt(temp);
-                SaveChanges(farm);
-                Console.WriteLine("New animals added");
+                bilding.AnimalsOnBild
+                       .Add(animal);
+
+                farm.RawMaterialOnFarm
+                    .AnimalsFree
+                    .Remove(animal);
+
+                using (var context = new FarmContext())
+                {
+                    context.RawMaterials
+                           .FirstOrDefault(x => x.RawMaterialId 
+                           == farm.RawMaterialOnFarm.RawMaterialId)
+                           .AnimalsFree.Remove(animal);
+
+                    context.SaveChanges();
+                }
+
+                Console.WriteLine("\n\t New animals added");
             }
             else
             {
-                Console.WriteLine("Sorry Square is busy");
+                Console.WriteLine("\n\t Sorry Square is busy");
             }
         }
 
@@ -364,14 +386,14 @@ namespace FarmOnVillage
         {
             if (farm.RawMaterialOnFarm.PlantsFree.Count == 0)
             {
-                Console.WriteLine("Please buy Plants");
+                Console.WriteLine("\n\t Please buy Plants");
                 return;
             }
 
-            Console.WriteLine("Choose what Plants do you want to add");
+            Console.WriteLine("\nChoose what Plants do you want to add");
             for (int i = 0; i < farm.RawMaterialOnFarm.PlantsFree.Count; i++)
             {
-                Console.WriteLine($"  {i} - {farm.RawMaterialOnFarm.PlantsFree[i].NamePlant}");
+                Console.WriteLine($"\t {i} - {farm.RawMaterialOnFarm.PlantsFree[i].NamePlant}");
             }
 
             int temp;
@@ -379,19 +401,19 @@ namespace FarmOnVillage
                 || temp < 0 
                 || temp >= farm.RawMaterialOnFarm.PlantsFree.Count)
             {
-                Console.WriteLine("Please enter correctly data");
+                Console.WriteLine("\n\t Please enter correctly data");
             }
 
             if (GardenBedLogics.ChekFreeBed(bed, farm.RawMaterialOnFarm.PlantsFree[temp]))
             {
                 bed.PlantsBed.Add(farm.RawMaterialOnFarm.PlantsFree[temp]);
-                Console.WriteLine("Mew Plant added");
+                Console.WriteLine("\n\t Mew Plant added");
                 farm.RawMaterialOnFarm.PlantsFree.RemoveAt(temp);
                 SaveChanges(farm);
             }
             else
             {
-                Console.WriteLine("Sorry Square is busy");
+                Console.WriteLine("\n\t Sorry Square is busy");
             }
         }
 
@@ -402,7 +424,7 @@ namespace FarmOnVillage
         {
             if (farm.StockInCountry == null)
             {
-                Console.WriteLine("Stock empty");
+                Console.WriteLine("\t Stock empty");
                 return;
             }
 
@@ -410,7 +432,7 @@ namespace FarmOnVillage
             farm.Money += temp;
             farm.StockInCountry.ProduktsOfAnimal.Clear();
             farm.StockInCountry.Plants.Clear();
-            Console.WriteLine($"You earned {temp}$");
+            Console.WriteLine($"\t You earned {temp}$");
             SaveChanges(farm);
         }
     }

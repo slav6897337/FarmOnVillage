@@ -57,22 +57,23 @@ namespace FarmOnVillage
         /// </summary>
         public static void AddPlantsToBed(Farm farm)
         {
+            Console.Clear();
             if (farm.GardenBedFarm.Count == 0)
             {
-                Console.WriteLine("There are no Garden bed on the farm");
+                Console.WriteLine("\n\n\t There are no Garden bed on the farm");
                 return;
             }
 
-            Console.WriteLine("Please choose in what Garden bed do you wont add plants");
+            Console.WriteLine("\n\nPlease choose in what Garden bed do you wont add plants");
             for (int i = 0; i < farm.GardenBedFarm.Count; i++)
             {
-                Console.WriteLine($"{i + 1} - Garden Bed");
+                Console.WriteLine($"\t {i + 1} - Garden Bed");
             }
 
             int bed;
             while (!int.TryParse(Console.ReadLine(), out bed) || bed - 1 < 0 || bed - 1 >= farm.GardenBedFarm.Count)
             {
-                Console.WriteLine("Please enter correctly data");
+                Console.WriteLine("\n\tPlease enter correctly data");
             }
 
             FarmLogics.ChecfreeGardenBed(farm, farm.GardenBedFarm[bed - 1]);

@@ -20,23 +20,14 @@ namespace FarmOnVillage
         /// </summary>
         public static void ReportRawMaterial(RawMaterial rawMaterial)
         {
-            RawMaterial rawmat = null;
-            using (var context = new FarmContext())
+            foreach (var animal in rawMaterial.AnimalsFree)
             {
-                rawmat = context.RawMaterials
-                                .Include(x => x.PlantsFree)
-                                .Include(x => x.AnimalsFree)
-                                .FirstOrDefault(x => x.RawMaterialId == rawMaterial.RawMaterialId);
+                Console.WriteLine($"\t {animal.NameAnimal} on Raw Material");
             }
 
-            foreach (var animal in rawmat.AnimalsFree)
+            foreach (var plant in rawMaterial.PlantsFree)
             {
-                Console.WriteLine($"{animal.NameAnimal} on Raw Material");
-            }
-
-            foreach (var plant in rawmat.PlantsFree)
-            {
-                Console.WriteLine($"{plant.NamePlant} on Raw Material");
+                Console.WriteLine($"\t {plant.NamePlant} on Raw Material");
             }
         }
     }

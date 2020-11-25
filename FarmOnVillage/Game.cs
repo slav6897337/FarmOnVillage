@@ -20,16 +20,24 @@ namespace FarmOnVillage
         internal static Farm StartGame()
         {
             Farm farm = null;
-
-            Console.WriteLine("Would you 1-Create new Farm or 2-Continue game\n");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("\n\n\t Would you\n\n" +
+                                    "\t 1 - Create new Farm\n\n" +
+                                    "\t or\n\n" +
+                                    "\t 2 - Continue game\n");
 
             switch (Console.ReadLine())
             {
                 case "1":
                     farm = DatabaseFarm.CreateFarm();
+                    Console.Clear();
                     break;
                 case "2":
                     farm = DatabaseFarm.ChooseFarm();
+                    Console.Clear();
+                    break;
+                case "3":
+                    DatabaseFarm.FillTableMarket();
                     break;
             }
 
@@ -50,37 +58,44 @@ namespace FarmOnVillage
 
             while (game)
             {
-                Console.WriteLine(" 1 - Report of Farm\n" +
-                                    " 2 - Purchases\n" +
-                                    " 3 - Report of Raw Material\n" +
-                                    " 4 - Report of Stock\n" +
-                                    " 5 - Farm management\n" +
-                                    " 6 - Money\n" +
-                                    " 7 - Sales\n" +
-                                    " Q - quit.\n");
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("\n\n\t 1 - Report of Farm\n" +
+                                        "\t 2 - Purchases\n" +
+                                        "\t 3 - Report of Raw Material\n" +
+                                        "\t 4 - Report of Stock\n" +
+                                        "\t 5 - Farm management\n" +
+                                        "\t 6 - Money\n" +
+                                        "\t 7 - Sales\n" +
+                                        "\t Q - quit.\n");
 
                 switch (Console.ReadLine())
                 {
                     case "1":
                         FarmLogics.ReportFarm(farm);
+                        Console.ReadKey();
                         break;
                     case "2":
                         FarmLogics.Purchases(farm);
                         break;
                     case "3":
                         RawMaterialLogics.ReportRawMaterial(farm.RawMaterialOnFarm);
+                        Console.ReadKey();
                         break;
                     case "4":
                         StockLogics.ReporStock(farm.StockInCountry);
+                        Console.ReadKey();
                         break;
                     case "5":
                         FarmManagement(farm);
                         break;
                     case "6":
-                        Console.WriteLine($"You have {farm.Money}$");
+                        Console.WriteLine($"\t You have {farm.Money}$");
+                        Console.ReadKey();
                         break;
                     case "7":
                         FarmLogics.Sales(farm);
+                        Console.ReadKey();
                         break;
                     case "q":
                         game = false;
@@ -108,7 +123,12 @@ namespace FarmOnVillage
             bool farmManag = true;
             while (farmManag)
             {
-                Console.WriteLine(" 1 - Add Animal in building\n 2 - Plant seeds\n 3 - Realty\n b - back\n");
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("\n\n\t 1 - Add Animal in building\n" +
+                                      "\t 2 - Plant seeds\n" +
+                                      "\t 3 - Realty\n " +
+                                      "\t b - back\n");
 
                 switch (Console.ReadLine())
                 {
@@ -140,7 +160,12 @@ namespace FarmOnVillage
             bool realty = true;
             while (realty)
             {
-                Console.WriteLine(" 1 - Buy land \n 2 - Add garden bed\n 3 - Add building\n b - back\n");
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("\n\n\t 1 - Buy land \n" +
+                                      "\t 2 - Add garden bed\n" +
+                                      "\t 3 - Add building\n" +
+                                      "\t b - back\n");
 
                 switch (Console.ReadLine())
                 {

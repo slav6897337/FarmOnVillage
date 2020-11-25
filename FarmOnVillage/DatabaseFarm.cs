@@ -40,15 +40,25 @@ namespace FarmOnVillage
                 while (!int.TryParse(Console.ReadLine(), out farmId)
                 || !farmContext.Select(x => x.FarmId).Contains(farmId));
 
-                farm = context.Farms
-                              .Include(x => x.BuildingFarm)
-                              .Include(x => x.GardenBedFarm)
-                              .Include(x => x.MarketForFarm)
-                              .Include(x => x.RawMaterialOnFarm)
-                              .Include(x => x.StockInCountry)
-                              .Include(x => x.RawMaterialOnFarm.AnimalsFree)
-                              .Include(x => x.RawMaterialOnFarm.PlantsFree)
-                              .FirstOrDefault(x => x.FarmId == farmId); 
+                farm = farmContext.Where(f => f.FarmId == farmId)
+                              .Include(m => m.MarketForFarm)
+                              .Include(a => a.MarketForFarm.AnimalsToBuy)
+                              .ThenInclude(p => p.ProduktAnimal)
+                              .Include(s => s.MarketForFarm.SeedsToBuy)
+                              .Include(s => s.StockInCountry)
+                              .Include(p => p.StockInCountry.ProduktsOfAnimal)
+                              .Include(s => s.StockInCountry.Plants)
+                              .Include(r => r.RawMaterialOnFarm)
+                              .Include(r => r.RawMaterialOnFarm.AnimalsFree)
+                              .ThenInclude(p => p.ProduktAnimal)
+                              .Include(r => r.RawMaterialOnFarm.PlantsFree)
+                              .Include(g => g.GardenBedFarm)
+                              .ThenInclude(p => p.PlantsBed)
+                              .Include(b => b.BuildingFarm)
+                              .ThenInclude(a => a.AnimalsOnBild)
+                              .ThenInclude(p => p.ProduktAnimal)
+                              .FirstOrDefault();
+
 
             }
 
@@ -88,8 +98,8 @@ namespace FarmOnVillage
             {
                 Market market = context.Markets
                                        .Include(x => x.AnimalsToBuy)
-                                       .Include(x => x.SeedsToBuy)
-                                       .Include(y => y.AnimalsToBuy)
+                                       .ThenInclude(x => x.ProduktAnimal)
+                                       .Include(x => x.SeedsToBuy)                                        
                                        .FirstOrDefault();
 
                 context.Farms.Add(new Farm()
