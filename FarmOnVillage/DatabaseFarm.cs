@@ -8,6 +8,7 @@ namespace FarmOnVillage
     using System.Linq;
     using Microsoft.EntityFrameworkCore;
     using Farm.Data;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Work with database.
@@ -20,12 +21,15 @@ namespace FarmOnVillage
         /// <returns>FarmId.</returns>
         internal static Farm ChooseFarm()
         {
-            Farm farm;
+            Farm farm = null;
+
+            DateTime now = DateTime.Now;
 
             using (var context = new FarmContext())
             {
-                var farmContext = context.Farms;
-                foreach (var item in farmContext)
+                var farms = context.Farms;
+
+                foreach (var item in farms)
                 {
                     Console.WriteLine(item.FarmId
                         + " "
@@ -38,29 +42,35 @@ namespace FarmOnVillage
                     Console.WriteLine("Choose number of Farm");
                 }
                 while (!int.TryParse(Console.ReadLine(), out farmId)
-                || !farmContext.Select(x => x.FarmId).Contains(farmId));
+                || !farms.Select(x => x.FarmId).Contains(farmId));
 
-                farm = farmContext.Where(f => f.FarmId == farmId)
-                              .Include(m => m.MarketForFarm)
-                              .Include(a => a.MarketForFarm.AnimalsToBuy)
-                              .ThenInclude(p => p.ProduktAnimal)
-                              .Include(s => s.MarketForFarm.SeedsToBuy)
-                              .Include(s => s.StockInCountry)
-                              .Include(p => p.StockInCountry.ProduktsOfAnimal)
-                              .Include(s => s.StockInCountry.Plants)
-                              .Include(r => r.RawMaterialOnFarm)
-                              .Include(r => r.RawMaterialOnFarm.AnimalsFree)
-                              .ThenInclude(p => p.ProduktAnimal)
-                              .Include(r => r.RawMaterialOnFarm.PlantsFree)
-                              .Include(g => g.GardenBedFarm)
-                              .ThenInclude(p => p.PlantsBed)
-                              .Include(b => b.BuildingFarm)
-                              .ThenInclude(a => a.AnimalsOnBild)
-                              .ThenInclude(p => p.ProduktAnimal)
-                              .FirstOrDefault();
+                farm = farms.First(f => f.FarmId == farmId);
 
+                /*                farm = farmContext.Where(f => f.FarmId == farmId)
+                                              .Include(m => m.MarketForFarm)
+                                              .Include(a => a.MarketForFarm.AnimalsToBuy)
+                                              .ThenInclude(p => p.ProduktAnimal)
+                                              .Include(s => s.MarketForFarm.SeedsToBuy)
+                                              .Include(s => s.StockInCountry)
+                                              .Include(p => p.StockInCountry.ProduktsOfAnimal)
+                                              .Include(s => s.StockInCountry.Plants)
+                                              .Include(r => r.RawMaterialOnFarm)
+                                              .Include(r => r.RawMaterialOnFarm.AnimalsFree)
+                                              .ThenInclude(p => p.ProduktAnimal)
+                                              .Include(r => r.RawMaterialOnFarm.PlantsFree)
+                                              .Include(g => g.GardenBedFarm)
+                                              .ThenInclude(p => p.PlantsBed)
+                                              .Include(b => b.BuildingFarm)
+                                              .ThenInclude(a => a.AnimalsOnBild)
+                                              .ThenInclude(p => p.ProduktAnimal)
+                                              .FirstOrDefault();
 
+                */
             }
+
+            DateTime now2 = DateTime.Now;
+            Console.WriteLine(now2 - now);
+            Console.ReadKey();
 
             return farm;
         }
@@ -99,10 +109,10 @@ namespace FarmOnVillage
                 Market market = context.Markets
                                        .Include(x => x.AnimalsToBuy)
                                        .ThenInclude(x => x.ProduktAnimal)
-                                       .Include(x => x.SeedsToBuy)                                        
+                                       .Include(x => x.SeedsToBuy)
                                        .FirstOrDefault();
 
-                context.Farms.Add(new Farm()
+                farm = new Farm()
                 {
                     NameFarm = nameFarm,
                     Area = area,
@@ -110,11 +120,12 @@ namespace FarmOnVillage
                     StockInCountry = stock,
                     MarketForFarm = market,
                     RawMaterialOnFarm = rawMaterial,
-                });
+                };
+
+                context.Farms.Add(farm);
 
                 context.SaveChanges();
 
-                farm = context.Farms.FirstOrDefault(x => x.NameFarm == nameFarm);
             }
 
             return farm;
@@ -128,7 +139,7 @@ namespace FarmOnVillage
             var market = new Market();
 
             Seed seedExzemp = new Seed()
-            { 
+            {
                 PlantsSeed = "Apple",
                 SeasonSeat = 5,
                 Price = 50,
@@ -227,7 +238,7 @@ namespace FarmOnVillage
             market.AnimalsToBuy.Add(cow);
             market.AnimalsToBuy.Add(pig);
             market.AnimalsToBuy.Add(sheep);
-            market.AnimalsToBuy.Add(hen);            
+            market.AnimalsToBuy.Add(hen);
 
             using (var context = new FarmContext())
             {
@@ -258,7 +269,7 @@ namespace FarmOnVillage
             }
             while (!decimal.TryParse(Console.ReadLine(), out price));
 
-            var seed = new Seed() 
+            var seed = new Seed()
             {
                 PlantsSeed = nameSeed,
                 SeasonSeat = seasonSeat,

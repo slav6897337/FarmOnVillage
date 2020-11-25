@@ -11,6 +11,7 @@
         /// </summary>
         public int FarmId { get; set; }
 
+        [System.ComponentModel.DataAnnotations.MaxLength(10)]
         /// <summary>
         /// Gets or sets property NameFarm.
         /// </summary>

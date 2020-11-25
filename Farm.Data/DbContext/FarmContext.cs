@@ -63,7 +63,7 @@
         /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=.\SQL_EXPRESS;Database=FarmDB;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=FarmDB;Trusted_Connection=True;");
         }
     }
 }
