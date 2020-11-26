@@ -6,7 +6,9 @@ namespace FarmOnVillage
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Farm.Data;
+    using Microsoft.EntityFrameworkCore;
 
     /// <summary>
     /// class Building.
@@ -64,7 +66,86 @@ namespace FarmOnVillage
                 Console.WriteLine("\n\t Please enter correctly data");
             }
 
-            FarmLogics.ChecfreeAnimal(farm, farm.BuildingFarm[building - 1]);
+            ChecfreeAnimal(farm, farm.BuildingFarm[building - 1]);
+        }
+
+        /// <summary>
+        /// This Method add animals to build.
+        /// </summary>
+        /// <param name="bilding"></param>
+        public static void ChecfreeAnimal(Farm farm, Building bilding)
+        {
+            if (farm.RawMaterialOnFarm.AnimalsFree.Count == 0)
+            {
+                Console.WriteLine("\n\t Please buy Animals");
+                return;
+            }
+
+            Console.WriteLine("\nChoose what Animals do you want to add");
+            foreach (var item in farm.RawMaterialOnFarm.AnimalsFree)
+            {
+                Console.WriteLine($"\t {item.AnimalId} - {item.NameAnimal}");
+            }
+
+            int temp;
+            while (!int.TryParse(Console.ReadLine(), out temp)
+                || farm.RawMaterialOnFarm.AnimalsFree.Select(x => x.AnimalId).Min(x => x) < 0
+                || temp > farm.RawMaterialOnFarm.AnimalsFree.Select(x => x.AnimalId).Max(x => x))
+            {
+                Console.WriteLine("\n\t Please enter correctly data");
+            }
+
+            var animal = farm.RawMaterialOnFarm
+                                .AnimalsFree
+                                .FirstOrDefault(x => x.AnimalId == temp);
+
+            Animal anim = new Animal()
+            {
+                NameAnimal = animal.NameAnimal,
+                Price = animal.Price,
+                TimeBetweenHarvests = animal.TimeBetweenHarvests,
+                ProduktAnimal = animal.ProduktAnimal
+            };
+
+
+            if (bilding.AnimalsOnBild.Count + 1 < bilding.ContentAnimals)
+            {
+                bilding.AnimalsOnBild
+                       .Add(anim);
+
+                SaveAnimalInBd(farm, bilding, anim);
+
+                farm.RawMaterialOnFarm
+                    .AnimalsFree
+                    .Remove(animal);
+                RawMaterialLogics.DeleteRawFaterialFromBd(farm, animal);
+
+
+
+                Console.WriteLine("\n\t New animals added");
+            }
+            else
+            {
+                Console.WriteLine("\n\t Sorry Square is busy");
+            }
+        }
+
+        private static void SaveAnimalInBd(Farm farm, Building build, Animal animal)
+        {
+            using (var context = new FarmContext())
+            {
+
+
+                context.Farms.Attach(farm);
+                context.Entry(farm
+                    .BuildingFarm
+                    .First(b => b.BuildingId == build.BuildingId)
+                    .AnimalsOnBild
+                    .First(a => a.AnimalId == animal.AnimalId))
+                    .State = EntityState.Added;
+
+                context.SaveChanges();
+            }
         }
     }
 }

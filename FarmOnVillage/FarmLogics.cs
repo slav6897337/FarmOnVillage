@@ -15,6 +15,9 @@ namespace FarmOnVillage
     /// </summary>
     public static class FarmLogics
     {
+
+
+
         internal static void SaveChanges(Farm farm)
         {
             using (var context = new FarmContext())
@@ -169,7 +172,7 @@ namespace FarmOnVillage
             {
                 BuildingLogics.ProductonStock(item, farm.StockInCountry);
             }
-            SaveChanges(farm);
+           // SaveChanges(farm);
         }
 
         /// <summary>
@@ -321,62 +324,7 @@ namespace FarmOnVillage
             }
         }
 
-        /// <summary>
-        /// This Method add animals to build.
-        /// </summary>
-        /// <param name="bilding"></param>
-        public static void ChecfreeAnimal(Farm farm, Building bilding)
-        {
-            if (farm.RawMaterialOnFarm.AnimalsFree.Count == 0)
-            {
-                Console.WriteLine("\n\t Please buy Animals");
-                return;
-            }
 
-            Console.WriteLine("\nChoose what Animals do you want to add");
-            foreach (var item in farm.RawMaterialOnFarm.AnimalsFree)
-            {
-                Console.WriteLine($"\t {item.AnimalId} - {item.NameAnimal}");
-            }
-
-            int temp;
-            while (!int.TryParse(Console.ReadLine(), out temp) 
-                || farm.RawMaterialOnFarm.AnimalsFree.Select(x => x.AnimalId).Min(x => x) < 0 
-                || temp > farm.RawMaterialOnFarm.AnimalsFree.Select(x => x.AnimalId).Max(x => x))
-            {
-                Console.WriteLine("\n\t Please enter correctly data");
-            }
-
-            Animal animal = farm.RawMaterialOnFarm
-                                .AnimalsFree
-                                .FirstOrDefault(x => x.AnimalId == temp);
-
-            if (bilding.AnimalsOnBild.Count + 1 < bilding.ContentAnimals)
-            {
-                bilding.AnimalsOnBild
-                       .Add(animal);
-
-                farm.RawMaterialOnFarm
-                    .AnimalsFree
-                    .Remove(animal);
-
-                using (var context = new FarmContext())
-                {
-                    context.RawMaterials
-                           .FirstOrDefault(x => x.RawMaterialId 
-                           == farm.RawMaterialOnFarm.RawMaterialId)
-                           .AnimalsFree.Remove(animal);
-
-                    context.SaveChanges();
-                }
-
-                Console.WriteLine("\n\t New animals added");
-            }
-            else
-            {
-                Console.WriteLine("\n\t Sorry Square is busy");
-            }
-        }
 
         /// <summary>
         /// Method ChecfreeGardenBed.

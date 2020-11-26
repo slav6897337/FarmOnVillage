@@ -58,8 +58,6 @@ namespace FarmOnVillage
                               .ThenInclude(a => a.AnimalsOnBild)
                               .ThenInclude(p => p.ProduktAnimal)
                               .FirstOrDefault();
-
-
             }
 
             return farm;

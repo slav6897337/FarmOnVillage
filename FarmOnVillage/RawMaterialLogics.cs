@@ -30,5 +30,36 @@ namespace FarmOnVillage
                 Console.WriteLine($"\t {plant.NamePlant} on Raw Material");
             }
         }
+
+        /// <summary>
+        /// Removes raw material from the database.
+        /// </summary>
+        /// <param name="farm"></param>
+        /// <param name="animal"></param>
+        internal static void DeleteRawFaterialFromBd(Farm farm, Animal animal)
+        {
+            using (var context = new FarmContext())
+            {
+                var farmTemp = new Farm()
+                {
+                    FarmId = farm.FarmId,
+                    RawMaterialOnFarm = new RawMaterial()
+                    {
+                        RawMaterialId = farm.RawMaterialOnFarm.RawMaterialId,
+                        AnimalsFree = new List<Animal>()
+                        {
+                            new Animal()
+                            {
+                                AnimalId = animal.AnimalId
+                            }
+                        }
+                    }
+                };
+                context.Farms.Attach(farmTemp);
+                context.Entry(farmTemp.RawMaterialOnFarm.AnimalsFree.First()).State = EntityState.Deleted;
+
+                context.SaveChanges();
+            }
+        }
     }
 }

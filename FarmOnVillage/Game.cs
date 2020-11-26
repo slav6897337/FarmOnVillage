@@ -109,6 +109,7 @@ namespace FarmOnVillage
 
                         FarmLogics.SmenaSezona(farm);
                         FarmLogics.ChekSeason(farm, manth);
+                        Console.ReadKey();
                         break;
                 }
             }
