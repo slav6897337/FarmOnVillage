@@ -38,7 +38,7 @@ namespace FarmOnVillage
         /// </summary>
         public static void ReporStock(Stock stock)
         {
-            Console.WriteLine($"Report of Stock Volume Stock {stock.VolumeStock}Kg," +
+            Console.WriteLine($"\nReport of Stock Volume Stock {stock.VolumeStock}Kg," +
                 $" percentage of warehouse Stock: {UsedVolumeInStock(stock) * 100 / stock.VolumeStock}%\n");
         }
 

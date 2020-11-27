@@ -36,7 +36,7 @@ namespace FarmOnVillage
         /// </summary>
         /// <param name="farm"></param>
         /// <param name="animal"></param>
-        internal static void DeleteRawFaterialFromBd(Farm farm, Animal animal)
+        internal static void DeleteRawMaterialFromBd(Farm farm, Animal animal)
         {
             using (var context = new FarmContext())
             {
@@ -57,6 +57,77 @@ namespace FarmOnVillage
                 };
                 context.Farms.Attach(farmTemp);
                 context.Entry(farmTemp.RawMaterialOnFarm.AnimalsFree.First()).State = EntityState.Deleted;
+
+                context.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Removes raw material from the database.
+        /// </summary>
+        /// <param name="farm"></param>
+        /// <param name="plant"></param>
+        internal static void DeleteRawMaterialFromBd(Farm farm, Plant plant)
+        {
+            using (var context = new FarmContext())
+            {
+                var farmTemp = new Farm()
+                {
+                    FarmId = farm.FarmId,
+                    RawMaterialOnFarm = new RawMaterial()
+                    {
+                        RawMaterialId = farm.RawMaterialOnFarm.RawMaterialId,
+                        PlantsFree = new List<Plant>()
+                        {
+                            new Plant()
+                            {
+                                PlantId = plant.PlantId
+                            }
+                        }
+                    }
+                };
+                context.Farms.Attach(farmTemp);
+                context.Entry(farmTemp.RawMaterialOnFarm.PlantsFree.First()).State = EntityState.Deleted;
+
+                context.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Save changes after added animal to raw material.
+        /// </summary>
+        /// <param name="farm">Farm.</param>
+        /// <param name="animal">New animal.</param>
+        public static void AddedAnimalToRw(Farm farm, Animal animal)
+        {
+            using (var context = new FarmContext())
+            {
+                context.Farms.Attach(farm);
+                context.Entry(farm
+                    .RawMaterialOnFarm
+                    .AnimalsFree
+                    .First(a => a.AnimalId == animal.AnimalId))
+                    .State = EntityState.Added;
+
+                context.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Save changes after added seed to raw material.
+        /// </summary>
+        /// <param name="farm">Farm.</param>
+        /// <param name="animal">New animal.</param>
+        public static void AddedSeedToRw(Farm farm, Plant plant)
+        {
+            using (var context = new FarmContext())
+            {
+                context.Farms.Attach(farm);
+                context.Entry(farm
+                    .RawMaterialOnFarm
+                    .PlantsFree
+                    .First(p => p.PlantId == plant.PlantId))
+                    .State = EntityState.Added;
 
                 context.SaveChanges();
             }

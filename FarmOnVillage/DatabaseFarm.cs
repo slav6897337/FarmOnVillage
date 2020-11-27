@@ -21,13 +21,14 @@ namespace FarmOnVillage
         internal static Farm ChooseFarm()
         {
             Farm farm;
-
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
             using (var context = new FarmContext())
             {
                 var farmContext = context.Farms;
                 foreach (var item in farmContext)
                 {
-                    Console.WriteLine(item.FarmId
+                    Console.WriteLine("\t" + item.FarmId
                         + " "
                         + item.NameFarm);
                 }
@@ -35,7 +36,7 @@ namespace FarmOnVillage
                 int farmId;
                 do
                 {
-                    Console.WriteLine("Choose number of Farm");
+                    Console.WriteLine("\n\tChoose number of Farm");
                 }
                 while (!int.TryParse(Console.ReadLine(), out farmId)
                 || !farmContext.Select(x => x.FarmId).Contains(farmId));

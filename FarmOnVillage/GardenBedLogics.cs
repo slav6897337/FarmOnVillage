@@ -5,7 +5,9 @@
 namespace FarmOnVillage
 {
     using System;
+    using System.Linq;
     using Farm.Data;
+    using Microsoft.EntityFrameworkCore;
 
     /// <summary>
     /// class GardenBed.
@@ -57,26 +59,75 @@ namespace FarmOnVillage
         /// </summary>
         public static void AddPlantsToBed(Farm farm)
         {
-            Console.Clear();
-            if (farm.GardenBedFarm.Count == 0)
+            while (true)
             {
-                Console.WriteLine("\n\n\t There are no Garden bed on the farm");
-                return;
-            }
+                Console.Clear();
+                if (farm.GardenBedFarm.Count == 0)
+                {
+                    Console.WriteLine("\n\n\t There are no Garden bed on the farm");
+                    Console.ReadKey();
+                    return;
+                }
 
-            Console.WriteLine("\n\nPlease choose in what Garden bed do you wont add plants");
-            for (int i = 0; i < farm.GardenBedFarm.Count; i++)
+                Console.WriteLine("\n\n\tPlease choose in what Garden bed do you wont add plants");
+                for (int i = 0; i < farm.GardenBedFarm.Count; i++)
+                {
+                    Console.WriteLine($"\t {i + 1} - Garden Bed");
+                }
+
+                Console.WriteLine($"\t b - back");
+
+                int bed;
+                while (!int.TryParse(Console.ReadLine(), out bed) || bed - 1 < 0 || bed - 1 >= farm.GardenBedFarm.Count)
+                {
+                    Console.WriteLine("\n\tPlease enter correctly data");
+                    return;
+                }
+
+                FarmLogics.ChecfreeGardenBed(farm, farm.GardenBedFarm[bed - 1]);
+            }
+        }
+
+        internal static void AddFreePlantsToBed(Farm farm, GardenBed bed, Plant choisenPlant)
+        {
+            Plant plant = new Plant()
             {
-                Console.WriteLine($"\t {i + 1} - Garden Bed");
-            }
+                NamePlant = choisenPlant.NamePlant,
+                Price = choisenPlant.Price,
+                AriaOfSeat = choisenPlant.AriaOfSeat,
+                Harvest = choisenPlant.Harvest,
+                SeasonGather = choisenPlant.SeasonGather,
+                SeasonSeat = choisenPlant.SeasonSeat
+            };
 
-            int bed;
-            while (!int.TryParse(Console.ReadLine(), out bed) || bed - 1 < 0 || bed - 1 >= farm.GardenBedFarm.Count)
+            bed.PlantsBed.Add(plant);
+            SaveAnimalToGb(farm, bed, plant);
+            farm.RawMaterialOnFarm.PlantsFree.Remove(choisenPlant);
+            RawMaterialLogics.DeleteRawMaterialFromBd(farm, choisenPlant);
+            Console.WriteLine("\n\t Mew Plant added");
+            Console.ReadKey();
+        }
+
+        /// <summary>
+        /// Save changes after added animal in Building.
+        /// </summary>
+        /// <param name="farm">Farm.</param>
+        /// <param name="build">Building.</param>
+        /// <param name="animal">New animal.</param>
+        private static void SaveAnimalToGb(Farm farm, GardenBed bed, Plant plant)
+        {
+            using (var context = new FarmContext())
             {
-                Console.WriteLine("\n\tPlease enter correctly data");
-            }
+                context.Farms.Attach(farm);
+                context.Entry(farm
+                    .GardenBedFarm
+                    .First(b => b.GardenBedId == bed.GardenBedId)
+                    .PlantsBed
+                    .First(a => a.PlantId == plant.PlantId))
+                    .State = EntityState.Added;
 
-            FarmLogics.ChecfreeGardenBed(farm, farm.GardenBedFarm[bed - 1]);
+                context.SaveChanges();
+            }
         }
     }
 }

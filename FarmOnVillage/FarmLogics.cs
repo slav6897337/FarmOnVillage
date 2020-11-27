@@ -143,7 +143,13 @@ namespace FarmOnVillage
         public static void AddBadOnFarm(Farm farm)
         {
             Console.WriteLine("\t Enter Square garden bed");
-            int square = int.Parse(Console.ReadLine());
+            int square;
+            while (int.TryParse(Console.ReadLine(), out square))
+            {
+                Console.WriteLine("Please enter correct data");
+                Console.ReadKey();
+            }
+            
 
             if (UsedAreaOnFarm(farm) + square < farm.Area)
             {
@@ -218,53 +224,62 @@ namespace FarmOnVillage
         /// </summary>
         public static void Purchases(Farm farm)
         {
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("\n\n\t What will you want to buy?\n" +
-                              "\t 1 - Animals\n" +
-                              "\t 2 - Seeds\n");
-
-            string choose = Console.ReadLine();
-
-            if (choose == "1")
+            bool purchases = true;
+            while (purchases)
             {
-                Console.WriteLine("\n\n\t Please choose animal");
-                for (int i = 0; i < farm.MarketForFarm.AnimalsToBuy.Count; i++)
-                {
-                    Console.WriteLine($"\t{i + 1} - {farm.MarketForFarm.AnimalsToBuy[i].NameAnimal}");
-                }
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("\n\n\t What will you want to buy?\n" +
+                                  "\t 1 - Animals\n" +
+                                  "\t 2 - Seeds\n" +
+                                  "\t b - back\n");
 
-                int temp;
-                while (!int.TryParse(Console.ReadLine(), out temp) 
-                    || temp - 1 < 0 
-                    || temp - 1 >= farm.MarketForFarm.AnimalsToBuy.Count)
-                {
-                    Console.WriteLine("\t Please enter correctly data");
-                }
+                string choose = Console.ReadLine();
 
-                BuySomething(farm, farm.MarketForFarm.AnimalsToBuy[temp - 1]);
-            }
-            else if (choose == "2")
-            {
-                Console.WriteLine("\n\n\t Please choose seeds");
-                for (int i = 0; i < farm.MarketForFarm.SeedsToBuy.Count; i++)
+                if (choose == "1")
                 {
-                    Console.WriteLine($"\t{i + 1} - {farm.MarketForFarm.SeedsToBuy[i].PlantsSeed}");
-                }
+                    Console.WriteLine("\n\n\t Please choose animal");
+                    for (int i = 0; i < farm.MarketForFarm.AnimalsToBuy.Count; i++)
+                    {
+                        Console.WriteLine($"\t{i + 1} - {farm.MarketForFarm.AnimalsToBuy[i].NameAnimal}");
+                    }
 
-                int temp;
-                while (!int.TryParse(Console.ReadLine(), out temp) 
-                    || temp - 1 < 0 
-                    || temp - 1 >= farm.MarketForFarm.SeedsToBuy.Count)
+                    int temp;
+                    while (!int.TryParse(Console.ReadLine(), out temp)
+                        || temp - 1 < 0
+                        || temp - 1 >= farm.MarketForFarm.AnimalsToBuy.Count)
+                    {
+                        Console.WriteLine("\t Please enter correctly data");
+                    }
+
+                    BuySomething(farm, farm.MarketForFarm.AnimalsToBuy[temp - 1]);
+                }
+                else if (choose == "2")
                 {
-                    Console.WriteLine("\t Please enter correctly data");
-                }
+                    Console.WriteLine("\n\n\t Please choose seeds");
+                    for (int i = 0; i < farm.MarketForFarm.SeedsToBuy.Count; i++)
+                    {
+                        Console.WriteLine($"\t{i + 1} - {farm.MarketForFarm.SeedsToBuy[i].PlantsSeed}");
+                    }
 
-                BuySomething(farm, farm.MarketForFarm.SeedsToBuy[temp - 1]);
-            }
-            else
-            {
-                Console.WriteLine("\t Sorry we don't have it.");
+                    int temp;
+                    while (!int.TryParse(Console.ReadLine(), out temp)
+                        || temp - 1 < 0
+                        || temp - 1 >= farm.MarketForFarm.SeedsToBuy.Count)
+                    {
+                        Console.WriteLine("\t Please enter correctly data");
+                    }
+
+                    BuySomething(farm, farm.MarketForFarm.SeedsToBuy[temp - 1]);
+                }
+                else if (choose == "b") 
+                {
+                    purchases = false;
+                }
+                else
+                {
+                    Console.WriteLine("\t Sorry we don't have it.");
+                }
             }
         }
 
@@ -290,7 +305,7 @@ namespace FarmOnVillage
                     ;
                 farm.RawMaterialOnFarm.AnimalsFree.Add(newAnim);
                 farm.Money -= anim.Price;
-                SaveChanges(farm);
+                RawMaterialLogics.AddedAnimalToRw(farm, newAnim);
             }
             else
             {
@@ -316,7 +331,7 @@ namespace FarmOnVillage
                 };
                 farm.RawMaterialOnFarm.PlantsFree.Add(newPlant);
                 farm.Money -= seed.Price;
-                SaveChanges(farm);
+                RawMaterialLogics.AddedSeedToRw(farm, newPlant);
             }
             else
             {
@@ -335,29 +350,29 @@ namespace FarmOnVillage
             if (farm.RawMaterialOnFarm.PlantsFree.Count == 0)
             {
                 Console.WriteLine("\n\t Please buy Plants");
+                Console.ReadKey();
                 return;
             }
 
-            Console.WriteLine("\nChoose what Plants do you want to add");
+            Console.WriteLine("\n\tChoose what Plants do you want to add");
             for (int i = 0; i < farm.RawMaterialOnFarm.PlantsFree.Count; i++)
             {
-                Console.WriteLine($"\t {i} - {farm.RawMaterialOnFarm.PlantsFree[i].NamePlant}");
+                Console.WriteLine($"\t {i + 1} - {farm.RawMaterialOnFarm.PlantsFree[i].NamePlant}");
             }
 
             int temp;
             while (!int.TryParse(Console.ReadLine(), out temp) 
-                || temp < 0 
-                || temp >= farm.RawMaterialOnFarm.PlantsFree.Count)
+                || temp < 1 
+                || temp > farm.RawMaterialOnFarm.PlantsFree.Count)
             {
                 Console.WriteLine("\n\t Please enter correctly data");
             }
 
-            if (GardenBedLogics.ChekFreeBed(bed, farm.RawMaterialOnFarm.PlantsFree[temp]))
+            var choisenPlant = farm.RawMaterialOnFarm.PlantsFree[temp - 1];
+
+            if (GardenBedLogics.ChekFreeBed(bed, choisenPlant))
             {
-                bed.PlantsBed.Add(farm.RawMaterialOnFarm.PlantsFree[temp]);
-                Console.WriteLine("\n\t Mew Plant added");
-                farm.RawMaterialOnFarm.PlantsFree.RemoveAt(temp);
-                SaveChanges(farm);
+                GardenBedLogics.AddFreePlantsToBed(farm, bed, choisenPlant);
             }
             else
             {

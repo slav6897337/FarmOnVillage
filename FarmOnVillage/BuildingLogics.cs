@@ -23,10 +23,10 @@ namespace FarmOnVillage
             Console.Write($"\nThis is the {building.NameBuilding} square equals {building.AriaOfBuilding} contains {building.ContentAnimals} animal: ");
             foreach (var animal in building.AnimalsOnBild)
             {
-                Console.Write($"\n{animal.NameAnimal} ");
+                Console.Write($"{animal.NameAnimal} ");
             }
 
-            Console.WriteLine($"percentage of occupancy {building.AnimalsOnBild.Count * 100 / building.ContentAnimals}%\n");
+            Console.WriteLine($"\npercentage of occupancy {building.AnimalsOnBild.Count * 100 / building.ContentAnimals}%\n");
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace FarmOnVillage
         {
             Console.Clear();
             foreach (var item in building.AnimalsOnBild)
-            {                
+            {
                 StockLogics.AddProduct(stock, item.ProduktAnimal);
                 Console.WriteLine($"\t {item.NameAnimal} gave {item.ProduktAnimal.NameProduktOfAnimal} {1}kg");
             }
@@ -48,25 +48,33 @@ namespace FarmOnVillage
         /// </summary>
         public static void AddAnimalToBild(Farm farm)
         {
-            if (farm.BuildingFarm.Count == 0)
+            while (true)
             {
-                Console.WriteLine("\n\t There are no buildings on the farm");
-                return;
-            }
+                Console.Clear();
 
-            Console.WriteLine("\n\t Please choose in what build do you wont add animal");
-            for (int i = 0; i < farm.BuildingFarm.Count; i++)
-            {
-                Console.WriteLine($"\t{i + 1} - {farm.BuildingFarm[i].NameBuilding}");
-            }
+                if (farm.BuildingFarm.Count == 0)
+                {
+                    Console.WriteLine("\n\t There are no buildings on the farm");
+                    return;
+                }
 
-            int building;
-            while (!int.TryParse(Console.ReadLine(), out building) || building - 1 < 0 || building - 1 >= farm.BuildingFarm.Count)
-            {
-                Console.WriteLine("\n\t Please enter correctly data");
-            }
+                Console.WriteLine("\n\t Please choose in what build do you wont add animal");
+                for (int i = 0; i < farm.BuildingFarm.Count; i++)
+                {
+                    Console.WriteLine($"\t{i + 1} - {farm.BuildingFarm[i].NameBuilding}");
+                }
 
-            ChecfreeAnimal(farm, farm.BuildingFarm[building - 1]);
+                Console.WriteLine($"\tb - back");
+
+                int building;
+                while (!int.TryParse(Console.ReadLine(), out building) || building - 1 < 0 || building - 1 >= farm.BuildingFarm.Count)
+                {
+                    Console.WriteLine("\n\t Please enter correctly data");
+                    return;
+                }
+
+                ChecfreeAnimal(farm, farm.BuildingFarm[building - 1]);
+            }
         }
 
         /// <summary>
@@ -78,26 +86,33 @@ namespace FarmOnVillage
             if (farm.RawMaterialOnFarm.AnimalsFree.Count == 0)
             {
                 Console.WriteLine("\n\t Please buy Animals");
+                Console.ReadKey();
                 return;
             }
 
             Console.WriteLine("\nChoose what Animals do you want to add");
+
+            int i = 1;
             foreach (var item in farm.RawMaterialOnFarm.AnimalsFree)
             {
-                Console.WriteLine($"\t {item.AnimalId} - {item.NameAnimal}");
+                Console.WriteLine($"\t {i++} - {item.NameAnimal}");
             }
+
+            Console.WriteLine("\t b - back");
 
             int temp;
             while (!int.TryParse(Console.ReadLine(), out temp)
-                || farm.RawMaterialOnFarm.AnimalsFree.Select(x => x.AnimalId).Min(x => x) < 0
-                || temp > farm.RawMaterialOnFarm.AnimalsFree.Select(x => x.AnimalId).Max(x => x))
+                || temp < 0
+                || temp > i)
             {
                 Console.WriteLine("\n\t Please enter correctly data");
+                return;
             }
 
             var animal = farm.RawMaterialOnFarm
-                                .AnimalsFree
-                                .FirstOrDefault(x => x.AnimalId == temp);
+                                .AnimalsFree.Skip(temp - 1)
+                                .Take(1)
+                                .First();
 
             Animal anim = new Animal()
             {
@@ -118,24 +133,29 @@ namespace FarmOnVillage
                 farm.RawMaterialOnFarm
                     .AnimalsFree
                     .Remove(animal);
-                RawMaterialLogics.DeleteRawFaterialFromBd(farm, animal);
-
-
+                RawMaterialLogics.DeleteRawMaterialFromBd(farm, animal);
 
                 Console.WriteLine("\n\t New animals added");
             }
             else
             {
                 Console.WriteLine("\n\t Sorry Square is busy");
+                Console.ReadKey();
+                return;
             }
+
         }
 
+        /// <summary>
+        /// Save changes after added animal in Building.
+        /// </summary>
+        /// <param name="farm">Farm.</param>
+        /// <param name="build">Building.</param>
+        /// <param name="animal">New animal.</param>
         private static void SaveAnimalInBd(Farm farm, Building build, Animal animal)
         {
             using (var context = new FarmContext())
             {
-
-
                 context.Farms.Attach(farm);
                 context.Entry(farm
                     .BuildingFarm

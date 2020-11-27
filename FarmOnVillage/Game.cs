@@ -21,7 +21,7 @@ namespace FarmOnVillage
         {
             Farm farm = null;
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("\n\n\t Would you\n\n" +
+            Console.WriteLine("\n\t Would you\n\n" +
                                     "\t 1 - Create new Farm\n\n" +
                                     "\t or\n\n" +
                                     "\t 2 - Continue game\n");
