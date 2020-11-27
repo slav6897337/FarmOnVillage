@@ -5,8 +5,8 @@
 namespace FarmOnVillage
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
+    using System.Linq;
+    using Farm.Data;
 
     /// <summary>
     /// Class Game.
@@ -14,58 +14,88 @@ namespace FarmOnVillage
     public static class Game
     {
         /// <summary>
-        /// Method Start Game.
+        /// Start game.
         /// </summary>
-        public static void StartGame()
+        /// <returns>Farm.</returns>
+        internal static Farm StartGame()
         {
-            Console.ForegroundColor = ConsoleColor.DarkRed;
-            Farm farm = new Farm();
-            Market bigMarket = new Market();
-            Stock stoc = new Stock();
-            RawMaterial rawMaterial = new RawMaterial();
-            farm.MarketForFarm = bigMarket;
-            farm.StockInCountry = stoc;
-            farm.RawMaterialOnFarm = rawMaterial;
-            InterfeisOne(farm, stoc, bigMarket);
+            Farm farm = null;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("\n\t Would you\n\n" +
+                                    "\t 1 - Create new Farm\n\n" +
+                                    "\t or\n\n" +
+                                    "\t 2 - Continue game\n");
+
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    farm = DatabaseFarm.CreateFarm();
+                    Console.Clear();
+                    break;
+                case "2":
+                    farm = DatabaseFarm.ChooseFarm();
+                    Console.Clear();
+                    break;
+                case "3":
+                    DatabaseFarm.FillTableMarket();
+                    break;
+            }
+
+            return farm;
         }
 
         /// <summary>
         /// Method Interface.
         /// </summary>
-        /// <param name="farm"></param>
-        /// <param name="stock"></param>
-        /// <param name="market"></param>
-        public static void InterfeisOne(Farm farm, Stock stock, Market market)
+        public static void StartMenu()
         {
+            Farm farm = StartGame();
+            if (farm == null)
+                return;
+
             bool game = true;
             byte manth = 1;
 
             while (game)
             {
-                Console.WriteLine(" 1 - Report of Farm\n 2 - Purchases\n 3 - Report of Raw Material\n 4 - Report of Stock\n 5 - Farm management\n 6 - Money\n 7 - Sales\n Q - quit.");
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("\n\n\t 1 - Report of Farm\n" +
+                                        "\t 2 - Purchases\n" +
+                                        "\t 3 - Report of Raw Material\n" +
+                                        "\t 4 - Report of Stock\n" +
+                                        "\t 5 - Farm management\n" +
+                                        "\t 6 - Money\n" +
+                                        "\t 7 - Sales\n" +
+                                        "\t Q - quit.\n");
 
                 switch (Console.ReadLine())
                 {
                     case "1":
-                        farm.ReportFarm();
+                        FarmLogics.ReportFarm(farm);
+                        Console.ReadKey();
                         break;
                     case "2":
-                        farm.Purchases();
+                        FarmLogics.Purchases(farm);
                         break;
                     case "3":
-                        farm.RawMaterialOnFarm.ReportRawMaterial();
+                        RawMaterialLogics.ReportRawMaterial(farm.RawMaterialOnFarm);
+                        Console.ReadKey();
                         break;
                     case "4":
-                        stock.ReporStock();
+                        StockLogics.ReporStock(farm.StockInCountry);
+                        Console.ReadKey();
                         break;
                     case "5":
-                        FarmManagement(farm, stock, market);
+                        FarmManagement(farm);
                         break;
                     case "6":
-                        Console.WriteLine($"You have {farm.Money}$");
+                        Console.WriteLine($"\t You have {farm.Money}$");
+                        Console.ReadKey();
                         break;
                     case "7":
-                        farm.Sales();
+                        FarmLogics.Sales(farm);
+                        Console.ReadKey();
                         break;
                     case "q":
                         game = false;
@@ -77,8 +107,9 @@ namespace FarmOnVillage
                             manth = 1;
                         }
 
-                        farm.SmenaSezona(stock);
-                        farm.ChekSeason(manth);
+                        FarmLogics.SmenaSezona(farm);
+                        FarmLogics.ChekSeason(farm, manth);
+                        Console.ReadKey();
                         break;
                 }
             }
@@ -88,26 +119,37 @@ namespace FarmOnVillage
         /// Method Farm Management.
         /// </summary>
         /// <param name="farm"></param>
-        /// <param name="stock"></param>
-        /// <param name="market"></param>
-        public static void FarmManagement(Farm farm, Stock stock, Market market)
+        public static void FarmManagement(Farm farm)
         {
-            Console.WriteLine(" 1 - Add Animal in building\n 2 - Plant seeds\n 3 - Realty");
-
-            switch (Console.ReadLine())
+            bool farmManag = true;
+            while (farmManag)
             {
-                case "1":
-                    farm.AddAnimalToBild();
-                    break;
-                case "2":
-                    farm.AddPlantsToBed();
-                    break;
-                case "3":
-                    Realty(farm);
-                    break;
-                default:
-                    break;
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("\n\n\t 1 - Add Animal in building\n" +
+                                      "\t 2 - Plant seeds\n" +
+                                      "\t 3 - Realty\n " +
+                                      "\t b - back\n");
+
+                switch (Console.ReadLine())
+                {
+                    case "1":
+                        BuildingLogics.AddAnimalToBild(farm);
+                        break;
+                    case "2":
+                        GardenBedLogics.AddPlantsToBed(farm);
+                        break;
+                    case "3":
+                        Realty(farm);
+                        break;
+                    case "b":
+                        farmManag = false;
+                        break;
+                    default:
+                        break;
+                }
             }
+            
         }
 
         /// <summary>
@@ -116,22 +158,35 @@ namespace FarmOnVillage
         /// <param name="farm"></param>
         public static void Realty(Farm farm)
         {
-            Console.WriteLine(" 1 - Buy land \n 2 - Add garden bed\n 3 - Add building");
-
-            switch (Console.ReadLine())
+            bool realty = true;
+            while (realty)
             {
-                case "1":
-                    farm.BuyLand();
-                    break;
-                case "2":
-                    farm.AddBadOnFarm();
-                    break;
-                case "3":
-                    farm.AddBildOnFarm();
-                    break;
-                default:
-                    break;
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("\n\n\t 1 - Buy land \n" +
+                                      "\t 2 - Add garden bed\n" +
+                                      "\t 3 - Add building\n" +
+                                      "\t b - back\n");
+
+                switch (Console.ReadLine())
+                {
+                    case "1":
+                        FarmLogics.BuyLand(farm);
+                        break;
+                    case "2":
+                        FarmLogics.AddBadOnFarm(farm);
+                        break;
+                    case "3":
+                        FarmLogics.AddBildOnFarm(farm);
+                        break;
+                    case "b":
+                        realty = false;
+                        break;
+                    default:
+                        break;
+                }
             }
+
         }
     }
 }
