@@ -70,20 +70,20 @@ namespace FarmOnVillage
         /// <returns>FarmId.</returns>
         internal static Farm CreateFarm()
         {
-            Console.WriteLine("Please enter Name Farm");
+            Console.WriteLine("\n\tPlease enter Name Farm");
             string nameFarm = System.Console.ReadLine();
 
             int area;
             do
             {
-                Console.WriteLine("Please enter Area");
+                Console.WriteLine("\tPlease enter Area");
             }
             while (!int.TryParse(Console.ReadLine(), out area));
 
             decimal money;
             do
             {
-                System.Console.WriteLine("Please enter Start Money");
+                System.Console.WriteLine("\tPlease enter Start Money");
             }
             while (!decimal.TryParse(Console.ReadLine(), out money));
 

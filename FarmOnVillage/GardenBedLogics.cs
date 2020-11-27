@@ -105,7 +105,6 @@ namespace FarmOnVillage
             farm.RawMaterialOnFarm.PlantsFree.Remove(choisenPlant);
             RawMaterialLogics.DeleteRawMaterialFromBd(farm, choisenPlant);
             Console.WriteLine("\n\t Mew Plant added");
-            Console.ReadKey();
         }
 
         /// <summary>

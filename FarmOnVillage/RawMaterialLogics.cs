@@ -20,11 +20,15 @@ namespace FarmOnVillage
         /// </summary>
         public static void ReportRawMaterial(RawMaterial rawMaterial)
         {
+            if (rawMaterial.AnimalsFree.Count == 0)
+                Console.WriteLine("You doesn't have free Animal");
             foreach (var animal in rawMaterial.AnimalsFree)
             {
                 Console.WriteLine($"\t {animal.NameAnimal} on Raw Material");
             }
 
+            if (rawMaterial.PlantsFree.Count == 0)
+                Console.WriteLine("You doesn't have free Plant");
             foreach (var plant in rawMaterial.PlantsFree)
             {
                 Console.WriteLine($"\t {plant.NamePlant} on Raw Material");

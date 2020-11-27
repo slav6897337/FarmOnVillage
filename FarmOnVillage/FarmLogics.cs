@@ -22,7 +22,7 @@ namespace FarmOnVillage
         {
             using (var context = new FarmContext())
             {
-                var farmDb = context.Farms.FirstOrDefault(x => x.FarmId == farm.FarmId);
+                var farmDb = context.Farms.First(x => x.FarmId == farm.FarmId);
                 if (farmDb.Area != farm.Area)
                     farmDb.Area = farm.Area;
                 if (farmDb?.BuildingFarm != farm.BuildingFarm)
@@ -142,11 +142,11 @@ namespace FarmOnVillage
         /// </summary>
         public static void AddBadOnFarm(Farm farm)
         {
-            Console.WriteLine("\t Enter Square garden bed");
+            Console.WriteLine("\n\t Enter Square garden bed");
             int square;
-            while (int.TryParse(Console.ReadLine(), out square))
+            while (!int.TryParse(Console.ReadLine(), out square))
             {
-                Console.WriteLine("Please enter correct data");
+                Console.WriteLine("\n\tPlease enter correct data");
                 Console.ReadKey();
             }
             
@@ -165,6 +165,7 @@ namespace FarmOnVillage
             else
             {
                 Console.WriteLine("\t Sorry Area busy.");
+                Console.ReadKey();
             }
         }
 
@@ -310,6 +311,7 @@ namespace FarmOnVillage
             else
             {
                 Console.WriteLine("\n\t Sorry you don't have money.");
+                Console.ReadKey();
             }
         }
 
@@ -336,6 +338,7 @@ namespace FarmOnVillage
             else
             {
                 Console.WriteLine("\t Sorry you don't have money.");
+                Console.ReadKey();
             }
         }
 
